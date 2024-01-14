@@ -22,17 +22,6 @@ int main(array<String^>^ args) {
 	Application::Run(% form);
 }
 
-
-
-
-
-
-
-
-
-
-
-
 System::Void kurs1::MyForm::buttonClear_Click(System::Object^ sender, System::EventArgs^ e)
 {
 	this->chart->Series[0]->Points->Clear();
@@ -126,7 +115,7 @@ void kurs1::MyForm::BuildFirstGraph()
 		while (x1 <= b) {
 			y1 = sol1.Solve(x1);
 			this->chart->Series[0]->Points->AddXY(x1, y1);
-			x1 += h1;
+			x1 += 0.01;
 		}
 	}
 	DrawAxes();
@@ -152,7 +141,7 @@ void kurs1::MyForm::BuildSecondGraph()
 		while (x2 <= b) {
 			y2 = sol1.Solve(x2);
 			this->chart->Series[1]->Points->AddXY(x2, y2);
-			x2 += h1;
+			x2 += 0.01;
 		}
 	}
 	DrawAxes();
@@ -176,7 +165,7 @@ void kurs1::MyForm::BuildTwoGraphs()
 		while (x1 <= b) {
 			y1 = sol1.Solve(x1);
 			this->chart->Series[0]->Points->AddXY(x1, y1);
-			x1 += h1;
+			x1 += 0.01;
 		}
 	}
 	x1 = a;
@@ -184,7 +173,7 @@ void kurs1::MyForm::BuildTwoGraphs()
 		while (x2 <= b) {
 			y2 = sol2.Solve(x2);
 			this->chart->Series[1]->Points->AddXY(x2, y2);
-			x2 += h1;
+			x2 += 0.01;
 		}
 	}
 	DrawAxes();
@@ -540,49 +529,108 @@ System::Void kurs1::MyForm::checkBox_minmax2_CheckedChanged(System::Object^ send
 
 
 List<DataPoint^>^ kurs1::MyForm::FindGlobalMinima(List<DataPoint^>^ Points) {
-	double minY = DBL_MAX;
-	List<DataPoint^>^ minima = gcnew List<DataPoint^>();
-
-	// Ќаходим самое минимальное значение Y
-	for each (DataPoint ^ point in Points) {
-		double yValue = point->YValues[0];
-		if (yValue < minY) {
-			minY = yValue;
+	if (isGraph1Built) {
+		List<DataPoint^>^ minimaPoints = gcnew List<DataPoint^>();
+		Solver sol;
+		char* expression = ConvertStringToCharArray(textBoxFunction1->Text);
+		if (!sol.Load(expression)) {
+			return nullptr;
 		}
-	}
-
-	// ƒобавл€ем все точки, в которых достигнуто минимальное значение Y
-	for each (DataPoint ^ point in Points) {
-		double yValue = point->YValues[0];
-		if (Math::Round(yValue,3) == Math::Round(minY,3)) {
-			minima->Add(point);
+		int count = 0;
+		double minimum = DBL_MAX;
+		for (double i = a; i <= b; i += h1) {
+			double y = sol.Solve(i);
+			if (sol.Solve(i) <= minimum) {
+				if (sol.Solve(i) < minimum) {
+					minimum = sol.Solve(i);
+					minimaPoints->Clear();
+				}
+				chart->Series[6]->Points->AddXY(i, sol.Solve(i));
+				minimaPoints->Add(chart->Series[6]->Points[count]);
+				count++;
+			}
 		}
+		return minimaPoints;
 	}
-
-	return minima;
+	else if (isGraph2Built) {
+		List<DataPoint^>^ minimaPoints = gcnew List<DataPoint^>();
+		Solver sol;
+		char* expression = ConvertStringToCharArray(textBoxFunction2->Text);
+		if (!sol.Load(expression)) {
+			return nullptr;
+		}
+		double minimum = DBL_MAX;
+		int count = 0;
+		for (double i = a; i <= b; i += h1) {
+			double y = sol.Solve(i);
+			bool pred = sol.Solve(i - h1) > y;
+			bool now = sol.Solve(i + h1) > y;
+			if (sol.Solve(i) <= minimum) {
+				if (sol.Solve(i) < minimum) {
+					minimum = sol.Solve(i);
+					minimaPoints->Clear();
+				}
+				chart->Series[6]->Points->AddXY(i, sol.Solve(i));
+				minimaPoints->Add(chart->Series[6]->Points[count]);
+				count++;
+			}
+		}
+		return minimaPoints;
+	}
 }
 
 List<DataPoint^>^ kurs1::MyForm::FindGlobalMaxima(List<DataPoint^>^ Points) {
-	double maxY = -DBL_MAX;
-	List<DataPoint^>^ maxima = gcnew List<DataPoint^>();
-
-	// Ќаходим самое максимальное значение Y
-	for each (DataPoint ^ point in Points) {
-		double yValue = point->YValues[0];
-		if (yValue > maxY) {
-			maxY = yValue;
+	if (isGraph1Built) {
+		List<DataPoint^>^ maximaPoints = gcnew List<DataPoint^>();
+		Solver sol;
+		char* expression = ConvertStringToCharArray(textBoxFunction1->Text);
+		if (!sol.Load(expression)) {
+			return nullptr;
 		}
-	}
+		int count = 0;
+		double maximum = -DBL_MAX;
+		for (double i = a; i <= b; i += h1) {
+			double y = sol.Solve(i);
+			bool pred = sol.Solve(i - h1) < y;
+			bool now = sol.Solve(i + h1) < y;
 
-	// ƒобавл€ем все точки, в которых достигнуто максимальное значение Y
-	for each (DataPoint ^ point in Points) {
-		double yValue = point->YValues[0];
-		if (Math::Round(yValue,3) == Math::Round(maxY,3)) {
-			maxima->Add(point);
+			if (sol.Solve(i) >= maximum) {
+				if (sol.Solve(i) > maximum) {
+					maximum = sol.Solve(i);
+					maximaPoints->Clear();
+				}
+				chart->Series[7]->Points->AddXY(i, sol.Solve(i));
+				maximaPoints->Add(chart->Series[7]->Points[count]);
+				count++;
+			}
 		}
+		return maximaPoints;
 	}
-
-	return maxima;
+	else if (isGraph2Built) {
+		List<DataPoint^>^ maximaPoints = gcnew List<DataPoint^>();
+		Solver sol;
+		char* expression = ConvertStringToCharArray(textBoxFunction2->Text);
+		if (!sol.Load(expression)) {
+			return nullptr;
+		}
+		int count = 0;
+		double maximum = -DBL_MAX;
+		for (double i = a; i <= b; i += h1) {
+			double y = sol.Solve(i);
+			bool pred = sol.Solve(i - h1) < y;
+			bool now = sol.Solve(i + h1) < y;
+			if (sol.Solve(i) >= maximum) {
+				if (sol.Solve(i) > maximum) {
+					maximum = sol.Solve(i);
+					maximaPoints->Clear();
+				}
+				chart->Series[7]->Points->AddXY(i, sol.Solve(i));
+				maximaPoints->Add(chart->Series[7]->Points[count]);
+				count++;
+			}
+		}
+		return maximaPoints;
+	}
 }
 
 
@@ -671,67 +719,38 @@ void kurs1::MyForm::checkBox_globminmax2_CheckedChanged(System::Object^ sender, 
 
 
 
-
-DataPoint^ FindClosestPoint(DataPoint^ targetPoint, DataPointCollection^ points, double epsilon) {
-	DataPoint^ closestPoint = nullptr;
-	double minDistance = DBL_MAX;
-
-	for each (DataPoint ^ point in points) {
-		double distanceX = Math::Abs(targetPoint->XValue - point->XValue);
-		double distanceY = Math::Abs(targetPoint->YValues[0] - point->YValues[0]);
-
-		if (distanceX < epsilon && distanceY < epsilon && distanceX + distanceY < minDistance) {
-			minDistance = distanceX + distanceY;
-			closestPoint = point;
-		}
-	}
-
-	return closestPoint;
-}
-
-//List<DataPoint^>^ kurs1::MyForm::FindIntersectionPoints(Series^ series1, Series^ series2, double epsilon) {
-//	List<DataPoint^>^ intersectPoints = gcnew List<DataPoint^>();
-//	Solver difference;
-//	Solver sol;
-//	char* expression1 = ConvertStringToCharArray(textBoxFunction1->Text);
-//	char* expression = ConvertStringToCharArray(textBoxFunction1->Text + " - " + textBoxFunction2->Text);
-//	if (!difference.Load(expression)) {
-//		return nullptr;
-//	}
-//	if (!sol.Load(expression1)) {
-//		return nullptr;
-//	}
-//	double pastPos = abs(difference.Solve(a - h1));
-//	int count = 0;
-//	bool pastCons = false;
-//	for (double i = a; i <= b; i += h1) {
-//		double y = difference.Solve(i);
-//		double absy = abs(y);
-//		bool currCons = pastPos > absy;
-//		if (pastCons && !currCons) {
-//			chart->Series[2]->Points->AddXY(i, sol.Solve(i));
-//			intersectPoints->Add(chart->Series[2]->Points[count]);
-//			count++;
-//		}
-//		pastPos = absy;
-//		pastCons = currCons;
-//	}
-//}
-
-
 List<DataPoint^>^ kurs1::MyForm::FindIntersectionPoints(Series^ series1, Series^ series2, double epsilon) {
 	List<DataPoint^>^ intersectPoints = gcnew List<DataPoint^>();
+	Solver difference;
+	Solver sol;
+	char* expression1 = ConvertStringToCharArray(textBoxFunction1->Text);
+	char* expression = ConvertStringToCharArray(textBoxFunction1->Text + " - ( " + textBoxFunction2->Text + ")");
+	if (!difference.Load(expression)) {
+		return nullptr;
+	}
+	if (!sol.Load(expression1)) {
+		return nullptr;
+	}
 
-	for (int i = 0; i < series1->Points->Count; ++i) {
-		DataPoint^ point1 = series1->Points[i];
-		DataPoint^ closestPoint = FindClosestPoint(point1, series2->Points, epsilon);
+	int count = 0;
+	for (double i = a; i <= b; i += h1) {
+		double y = abs(difference.Solve(i));
+		bool pred = abs(difference.Solve(i-h1)) > y;
+		bool now = abs(difference.Solve(i+h1)) > y;
 		
-		if (closestPoint != nullptr) {
-			intersectPoints->Add(point1);
+		if (pred && now) {
+			if (abs(difference.Solve(i)) < h1*10) {
+				chart->Series[2]->Points->AddXY(i, sol.Solve(i));
+				intersectPoints->Add(chart->Series[2]->Points[count]);
+				count++;
+			}
 		}
 	}
 	return intersectPoints;
 }
+
+
+
 
 void kurs1::MyForm::HighlightIntersectionPoints(List<DataPoint^>^ intersectPoints, System::Drawing::Color color) {
 	for each (DataPoint ^ point in intersectPoints) {
@@ -802,6 +821,7 @@ System::Void kurs1::MyForm::chart_MouseMove(System::Object^ sender, System::Wind
 					else {
 						// ≈сли курсор не близко к точке, верните обычный стиль
 						point->MarkerStyle = System::Windows::Forms::DataVisualization::Charting::MarkerStyle::None;
+						point->MarkerColor = System::Drawing::Color::Transparent;
 					}
 				}
 			}

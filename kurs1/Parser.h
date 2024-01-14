@@ -318,7 +318,7 @@ private:
 		if (op == "+" || op == "-") {
 			return 1;
 		}
-		if (op == "*" || op == "/") {
+		if (op == "*" || op == "/" || op == "%") {
 			return 2;
 		}
 		if (op == "^") {

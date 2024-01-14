@@ -42,9 +42,6 @@ namespace kurs1 {
 	//private: Instruction^ Instruction_form = nullptr;
 	public: System::Windows::Forms::DataVisualization::Charting::Chart^ chart;
 	private:
-
-
-
 	private: System::Windows::Forms::MenuStrip^ menuStrip1;
 	private: System::Windows::Forms::ToolStripMenuItem^ ÏÂÌ˛ToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^ ÔÓÒÚÓËÚ¸√‡ÙËÍToolStripMenuItem;
@@ -61,49 +58,17 @@ namespace kurs1 {
 	private: System::Windows::Forms::TextBox^ textBox1;
 	public: System::Windows::Forms::TextBox^ textBoxFunction1;
 	private:
-
 	private:
-
-
 	private: Instruction^ Instruction_form = nullptr;
-
-
 	private: System::Windows::Forms::Label^ label4;
-
-
 	private: System::Windows::Forms::RadioButton^ radioButton5;
 	private: System::Windows::Forms::RadioButton^ radioButton4;
 	private: System::Windows::Forms::RadioButton^ radioButton3;
 	public: System::Windows::Forms::TextBox^ textBoxFunction2;
 	private:
-
 	private:
-
-
-
-
-
-
 	private: System::Windows::Forms::Label^ label10;
-
-
-
-
 	private: System::Windows::Forms::CheckBox^ checkBox_searchCross;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	private: System::Windows::Forms::CheckBox^ checkBox_minmax1;
 	private: System::Windows::Forms::CheckBox^ checkBox_minmax2;
 	private: System::Windows::Forms::Label^ labelCoordinates;
@@ -115,23 +80,11 @@ namespace kurs1 {
 	private: System::Windows::Forms::Button^ buttonPanRight;
 	private: System::Windows::Forms::Button^ buttonClear;
 	private: System::Windows::Forms::Button^ buttonResetCheckbox;
-
-
-
-
-
 	private: System::Windows::Forms::CheckBox^ checkBox_globminmax2;
 	private: System::Windows::Forms::CheckBox^ checkBox_globminmax1;
-
 	private: System::Windows::Forms::MenuStrip^ menuStrip2;
 	private: System::Windows::Forms::ToolStripMenuItem^ ÒÔ‡‚Ó˜Ì‡ˇ»ÌÙÓÏ‡ˆËˇToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^ ‚˚ıÓ‰ToolStripMenuItem1;
-
-
-
-
-
-
 	protected:
 
 	protected:
@@ -209,7 +162,6 @@ namespace kurs1 {
 			// chart
 			// 
 			chartArea1->AxisX->ArrowStyle = System::Windows::Forms::DataVisualization::Charting::AxisArrowStyle::Triangle;
-			chartArea1->AxisX->IntervalAutoMode = System::Windows::Forms::DataVisualization::Charting::IntervalAutoMode::VariableCount;
 			chartArea1->AxisX->ScrollBar->ButtonStyle = System::Windows::Forms::DataVisualization::Charting::ScrollBarButtonStyles::ResetZoom;
 			chartArea1->AxisX->Title = L"ŒÒ¸ X";
 			chartArea1->AxisY->ArrowStyle = System::Windows::Forms::DataVisualization::Charting::AxisArrowStyle::Triangle;
@@ -673,7 +625,7 @@ namespace kurs1 {
 			this->ÒÔ‡‚Ó˜Ì‡ˇ»ÌÙÓÏ‡ˆËˇToolStripMenuItem->Size = System::Drawing::Size(161, 20);
 			this->ÒÔ‡‚Ó˜Ì‡ˇ»ÌÙÓÏ‡ˆËˇToolStripMenuItem->Text = L"—Ô‡‚Ó˜Ì‡ˇ ËÌÙÓÏ‡ˆËˇ";
 			this->ÒÔ‡‚Ó˜Ì‡ˇ»ÌÙÓÏ‡ˆËˇToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::ÒÔ‡‚Ó˜Ì‡ˇ»ÌÙÓÏ‡ˆËˇToolStripMenuItem_Click);
-			//// 
+			// 
 			// ‚˚ıÓ‰ToolStripMenuItem1
 			// 
 			this->‚˚ıÓ‰ToolStripMenuItem1->Name = L"‚˚ıÓ‰ToolStripMenuItem1";
@@ -737,27 +689,16 @@ namespace kurs1 {
 		   System::Void chart_MouseMove(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e);
 		   System::Void chart_MouseLeave(System::Object^ sender, System::EventArgs^ e);
 		   System::Void chart_MouseEnter(System::Object^ sender, System::EventArgs^ e);
-
 	private: System::Void buttonPanDown_Click(System::Object^ sender, System::EventArgs^ e);
 		   System::Void buttonPanUp_Click(System::Object^ sender, System::EventArgs^ e);
 		   System::Void buttonPanLeft_Click(System::Object^ sender, System::EventArgs^ e);
 		   System::Void buttonPanRight_Click(System::Object^ sender, System::EventArgs^ e);
-
-
-
 		   void HighlightPoints(List<DataPoint^>^ points, System::Drawing::Color color);
 		   void HighlightMinMaxPoints();
-
-
-
-
 	private: System::Void buttonClear_Click(System::Object^ sender, System::EventArgs^ e);
 	private: System::Void buttonResetCheckbox_Click(System::Object^ sender, System::EventArgs^ e);
 	private: System::Void buttonZoomIn_Click(System::Object^ sender, System::EventArgs^ e);
 	private: System::Void buttonZoomOut_Click(System::Object^ sender, System::EventArgs^ e);
-
-	
-
 	private: System::Void ÒÔ‡‚Ó˜Ì‡ˇ»ÌÙÓÏ‡ˆËˇToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
 		if (Instruction_form == nullptr || Instruction_form->IsDisposed) {
 			Instruction_form = gcnew Instruction();
