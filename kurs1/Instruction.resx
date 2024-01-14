@@ -117,10 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="menuStrip2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>132, 17</value>
-  </metadata>
+  <data name="label2.Text" xml:space="preserve">
+    <value>В поля для ввода функций можно вводить такие функции, как, например 2*x, sin(x), sin x
+Поддерживаются такие функции, как sin, cos, acos, asin, tan, atan, cosh, sinh, sqrt, sqr, lg, ln,
+log2, cot, acot, exp, round, int, abs
+Поддерживаются операции +, -, *, /, %, ^</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Для построения графиков есть 3 кнопки, одна из которых строит первую функцию
+вторая из них строит обе функции, а третья строит вторую функцию
+Для панорамирования на графике предусмотрены 4 кнопки: вверх, вниз, влево, вправо
+При наведении на точку на графике отображаются ее текущие координаты рядом с полем
+"Текущая точка на графике"
+Можно использовать кнопку "Очистить графики", чтобы графики исчезли, а затем построить
+заново
+Кнопка "Сброс чекбоксов" сбрасывает "галочки" на всех чекбоксах, которые были нажаты</value>
+  </data>
 </root>

@@ -12,7 +12,8 @@
 #define PI 3.14159265358979323846 
 using namespace System;
 using namespace System::Windows::Forms;
-
+using namespace System::Collections::Generic;  // Добавление это для использования List
+using namespace System::Windows::Forms::DataVisualization::Charting;  // Добавление этого для использования DataPoint
 [STAThreadAttribute]
 int main(array<String^>^ args) {
 	Application::SetCompatibleTextRenderingDefault(false);
@@ -23,51 +24,38 @@ int main(array<String^>^ args) {
 
 
 
-System::Void kurs1::MyForm::построитьГрафикToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e)
+
+
+
+
+
+
+
+
+
+System::Void kurs1::MyForm::buttonClear_Click(System::Object^ sender, System::EventArgs^ e)
 {
-
-	if (checkBox1->Checked == false) {
-		MessageBox::Show("Выберите хотя бы один график!", "Внимание!");
-		return;
-	}
-	if (textBox1->Text == "" || textBox2->Text == "" || textBox3->Text == "") {
-		MessageBox::Show("Параметры по умолчанию!", "Внимание!");
-		DefaultParams();
-	}
-	else {
-		a = Convert::ToDouble(textBox1->Text);
-		b = Convert::ToDouble(textBox2->Text);
-		h1 = Convert::ToDouble(textBox3->Text);
-	}
-	
-	if (checkBox1->Checked) {
-		x1 = a;
-		this->chart->Series[0]->Points->Clear();
-		//this->chart->ChartAreas[0]->AxisX->Maximum = 10;
-
-		//this->chart->ChartAreas[0]->AxisY->Maximum = 20000;
-		// Enable range selection and zooming end user interface
-		this->chart->ChartAreas[0]->CursorX->IsUserEnabled = true;
-		this->chart->ChartAreas[0]->CursorX->IsUserSelectionEnabled = true;
-		while (x1 <= b) {
-            char* expression = ConvertStringToCharArray(textBoxFunction1->Text);
-			y1 = parseExpression(expression,x1);
-			this->chart->Series[0]->Points->AddXY(x1, y1);
-			x1 += h1;
-		}
-	}
+	this->chart->Series[0]->Points->Clear();
+	this->chart->Series[1]->Points->Clear();
+	radioButton3->Checked = false;
+	radioButton4->Checked = false;
+	radioButton5->Checked = false;
+	checkBox_minmax1->Checked = false;
+	checkBox_minmax2->Checked = false;
+	checkBox_searchCross->Checked = false;
 }
 
-System::Void kurs1::MyForm::очиститьГрафикToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e)
+System::Void kurs1::MyForm::buttonResetCheckbox_Click(System::Object^ sender, System::EventArgs^ e)
 {
-	if (checkBox1->Checked == false) {
-		MessageBox::Show("Выберите хотя бы один график!", "Внимание!");
-		return;
-	}
-	if (checkBox1->Checked) {
-		this->chart->Series[0]->Points->Clear();
-	}
+	checkBox_minmax1->Checked = false;
+	checkBox_minmax2->Checked = false;
+	checkBox_searchCross->Checked = false;
 }
+
+
+
+
+
 
 System::Void kurs1::MyForm::выходToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e)
 {
@@ -76,53 +64,55 @@ System::Void kurs1::MyForm::выходToolStripMenuItem_Click(System::Object^ sender,
 	}
 }
 
-void kurs1::MyForm::DefaultParams1()
-{
-	a = 0;
-	b = 10;
-	h1 = 0.1;
-	textBox1->Text = a.ToString();
-	textBox2->Text = b.ToString();
-	textBox3->Text = h1.ToString();
-	
-}
 
-
-
-void kurs1::MyForm::DefaultParams2()
-{
-	c = 0;
-	d = 10;
-	h2 = 0.1;
-	textBox4->Text = c.ToString();
-	textBox5->Text = d.ToString();
-	textBox6->Text = h2.ToString();
-}
 
 void kurs1::MyForm::DefaultParams()
 {
-	a = 0;
+	a = -10;
 	b = 10;
-	h1 = 0.1;
-	h2 = 0.1;
-	c = 0;
-	d = 10;
+	h1 = 0.01;
 	textBox1->Text = a.ToString();
 	textBox2->Text = b.ToString();
 	textBox3->Text = h1.ToString();
-	textBox4->Text = c.ToString();
-	textBox5->Text = d.ToString();
-	textBox6->Text = h2.ToString();
 
+
+}
+
+
+
+void kurs1::MyForm::DrawAxes() {
+	// Рисуем ось X
+	this->chart->ChartAreas[0]->AxisX->MajorGrid->LineColor = System::Drawing::Color::Black;
+	this->chart->ChartAreas[0]->AxisX->LineDashStyle = System::Windows::Forms::DataVisualization::Charting::ChartDashStyle::Solid;
+	this->chart->ChartAreas[0]->AxisX->Crossing = 0; // Проходит через начало координат
+	this->chart->ChartAreas[0]->AxisX->LineWidth = 2;
+
+	// Рисуем ось Y
+	this->chart->ChartAreas[0]->AxisY->MajorGrid->LineColor = System::Drawing::Color::Black;
+	this->chart->ChartAreas[0]->AxisY->LineDashStyle = System::Windows::Forms::DataVisualization::Charting::ChartDashStyle::Solid;
+	this->chart->ChartAreas[0]->AxisY->Crossing = 0; // Проходит через начало координат
+	this->chart->ChartAreas[0]->AxisY->LineWidth = 2;
+}
+
+
+
+
+// Function to convert System::String to char array
+char* ConvertStringToCharArray(System::String^ str) {
+	cli::pin_ptr<const wchar_t> wch = PtrToStringChars(str);
+	int len = wcslen(wch);
+	char* ch = new char[len + 1];
+	wcstombs(ch, wch, len + 1);
+	return ch;
 }
 
 
 void kurs1::MyForm::BuildFirstGraph()
 {
-	
+
 	if (textBox1->Text == "" || textBox2->Text == "" || textBox3->Text == "") {
 		MessageBox::Show("Параметры по умолчанию!", "Внимание!");
-		DefaultParams1();
+		DefaultParams();
 	}
 	else {
 		a = Convert::ToDouble(textBox1->Text);
@@ -130,72 +120,92 @@ void kurs1::MyForm::BuildFirstGraph()
 		h1 = Convert::ToDouble(textBox3->Text);
 	}
 	x1 = a;
-	while (x1 <= b) {
-
-		char* expression = ConvertStringToCharArray(textBoxFunction1->Text);
-		y1 = parseExpression(expression, x1);
-
-
-		this->chart->Series[0]->Points->AddXY(x1, y1);
-		x1 += h1;
+	Solver sol1;
+	char* expression = ConvertStringToCharArray(textBoxFunction1->Text);
+	if (sol1.Load(expression)) {
+		while (x1 <= b) {
+			y1 = sol1.Solve(x1);
+			this->chart->Series[0]->Points->AddXY(x1, y1);
+			x1 += h1;
+		}
 	}
+	DrawAxes();
 	x1 = a;
 }
 
 void kurs1::MyForm::BuildSecondGraph()
 {
-	if (textBox4->Text == "" || textBox5->Text == "" || textBox6->Text == "") {
+
+	if (textBox1->Text == "" || textBox2->Text == "" || textBox3->Text == "") {
 		MessageBox::Show("Параметры по умолчанию!", "Внимание!");
-		DefaultParams2();
+		DefaultParams();
 	}
 	else {
-		c = Convert::ToDouble(textBox4->Text);
-		d = Convert::ToDouble(textBox5->Text);
-		h2 = Convert::ToDouble(textBox6->Text);
+		a = Convert::ToDouble(textBox1->Text);
+		b = Convert::ToDouble(textBox2->Text);
+		h1 = Convert::ToDouble(textBox3->Text);
 	}
-	x2 = c;
-	while (x2 <= d) {
-		char* expression = ConvertStringToCharArray(textBoxFunction2->Text);
-		y2 = parseExpression(expression, x2);
-
-		this->chart->Series[1]->Points->AddXY(x2, y2);
-		x2 += h2;
+	x2 = a;
+	Solver sol1;
+	char* expression = ConvertStringToCharArray(textBoxFunction2->Text);
+	if (sol1.Load(expression)) {
+		while (x2 <= b) {
+			y2 = sol1.Solve(x2);
+			this->chart->Series[1]->Points->AddXY(x2, y2);
+			x2 += h1;
+		}
 	}
-	x2 = c;
+	DrawAxes();
+	x2 = a;
 }
 
 
 void kurs1::MyForm::BuildTwoGraphs()
 {
-	if ((textBox1->Text == "" || textBox2->Text == "" || textBox3->Text == "") && (textBox4->Text == "" || textBox5->Text == "" || textBox6->Text == "")) {
+	if (textBox1->Text == "" || textBox2->Text == "" || textBox3->Text == "") {
 		MessageBox::Show("Параметры по умолчанию!", "Внимание!");
 		DefaultParams();
 	}
 	x1 = a;
-	x2 = c;
+	x2 = x1;
 	char* expression1 = ConvertStringToCharArray(textBoxFunction1->Text);
 	char* expression2 = ConvertStringToCharArray(textBoxFunction2->Text);
-	while (x1 <= b) {
-		y1 = parseExpression(expression1, x1);
-		this->chart->Series[0]->Points->AddXY(x1, y1);
-		x1 += h1;
+	Solver sol1;
+	Solver sol2;
+	if (sol1.Load(expression1)) {
+		while (x1 <= b) {
+			y1 = sol1.Solve(x1);
+			this->chart->Series[0]->Points->AddXY(x1, y1);
+			x1 += h1;
+		}
 	}
-	while (x2 <= d) {
-		y2 = parseExpression(expression2, x2);
-		this->chart->Series[1]->Points->AddXY(x2, y2);
-		x2 += h2;
-	}
-
 	x1 = a;
-	x2 = c;
+	if (sol2.Load(expression2)) {
+		while (x2 <= b) {
+			y2 = sol2.Solve(x2);
+			this->chart->Series[1]->Points->AddXY(x2, y2);
+			x2 += h1;
+		}
+	}
+	DrawAxes();
+	x2 = a;
 }
+
+bool isGraph1Built = false;
+bool isGraph2Built = false;
 
 System::Void kurs1::MyForm::radioButton3_CheckedChanged(System::Object^ sender, System::EventArgs^ e)
 {
 
+	isGraph1Built = true;
+	isGraph2Built = false;
 	this->chart->Series[0]->Points->Clear();
 	this->chart->Series[1]->Points->Clear();
-
+	//this->chart->ChartAreas[0]->RecalculateAxesScale();
+	// Настройка оси Y для первой серии
+	this->chart->ChartAreas[0]->AxisY->Minimum = -10; // Минимальное значение Y
+	this->chart->ChartAreas[0]->AxisY->Maximum = 10;  // Максимальное значение Y
+	this->chart->ChartAreas[0]->AxisY->Interval = 0.5; // Интервал между делениями оси Y
 	// Постройте первый график
 	if (radioButton3->Checked) {
 		if (textBoxFunction1->Text == "") {
@@ -209,10 +219,14 @@ System::Void kurs1::MyForm::radioButton3_CheckedChanged(System::Object^ sender, 
 
 System::Void kurs1::MyForm::radioButton4_CheckedChanged(System::Object^ sender, System::EventArgs^ e)
 {
-
+	isGraph1Built = true;
+	isGraph2Built = true;
 	this->chart->Series[0]->Points->Clear();
 	this->chart->Series[1]->Points->Clear();
-
+	//this->chart->ChartAreas[0]->RecalculateAxesScale();
+	this->chart->ChartAreas[0]->AxisY->Minimum = -10; // Минимальное значение Y
+	this->chart->ChartAreas[0]->AxisY->Maximum = 10;  // Максимальное значение Y
+	this->chart->ChartAreas[0]->AxisY->Interval = 0.5; // Интервал между делениями оси Y
 	// Постройте два графика
 	if (radioButton4->Checked) {
 		if (textBoxFunction1->Text == "" || textBoxFunction2->Text == "") {
@@ -226,11 +240,14 @@ System::Void kurs1::MyForm::radioButton4_CheckedChanged(System::Object^ sender, 
 
 System::Void kurs1::MyForm::radioButton5_CheckedChanged(System::Object^ sender, System::EventArgs^ e)
 {
-
+	isGraph1Built = false;
+	isGraph2Built = true;
 	this->chart->Series[0]->Points->Clear();
 	this->chart->Series[1]->Points->Clear();
-
-
+	//this->chart->ChartAreas[0]->RecalculateAxesScale();
+	this->chart->ChartAreas[0]->AxisY->Minimum = -10; // Минимальное значение Y
+	this->chart->ChartAreas[0]->AxisY->Maximum = 10;  // Максимальное значение Y
+	this->chart->ChartAreas[0]->AxisY->Interval = 0.5; // Интервал между делениями оси Y
 	if (radioButton5->Checked) {
 		if (textBoxFunction2->Text == "") {
 			MessageBox::Show("Функция отсутствует", "Внимание!");
@@ -244,498 +261,620 @@ System::Void kurs1::MyForm::radioButton5_CheckedChanged(System::Object^ sender, 
 
 
 
-double FindMinimum(char* expression, double a, double b) {
-	const double goldenRatio = (1 + sqrt(5)) / 2;
-	const double epsilon = 1e-6;
-	
-	double x1 = b - (b - a) / goldenRatio;
-	double x2 = a + (b - a) / goldenRatio;
 
-	double f1 = parseExpression(expression, x1);
-	double f2 = parseExpression(expression, x2);
+void kurs1::MyForm::HighlightMinMaxPoints() {
+	if (isGraph1Built || isGraph2Built) {
+		// Списки для хранения минимумов и максимумов
+		List<DataPoint^>^ minPoints = gcnew List<DataPoint^>();
+		List<DataPoint^>^ maxPoints = gcnew List<DataPoint^>();
 
-	while (fabs(b - a) > epsilon) {
-		if (f1 < f2) {
-			b = x2;
-			x2 = x1;
-			f2 = f1;
-			x1 = b - (b - a) / goldenRatio;
-			f1 = parseExpression(expression, x1);
+		// Минимальное и максимальное значение Y на графике
+		double minY = std::numeric_limits<double>::infinity();
+		double maxY = -std::numeric_limits<double>::infinity();
+
+		// Поиск минимумов и максимумов по всем сериям графика
+		for each (Series ^ series in chart->Series) {
+			for each (DataPoint ^ point in series->Points) {
+				double yValue = point->YValues[0];
+
+				// Проверка на минимум
+				if (yValue < minY) {
+					minY = yValue;
+					minPoints->Clear();
+					minPoints->Add(point);
+				}
+				else if (yValue == minY) {
+					minPoints->Add(point);
+				}
+
+				// Проверка на максимум
+				if (yValue > maxY) {
+					maxY = yValue;
+					maxPoints->Clear();
+					maxPoints->Add(point);
+				}
+				else if (yValue == maxY) {
+					maxPoints->Add(point);
+				}
+			}
 		}
-		else {
-			a = x1;
-			x1 = x2;
-			f1 = f2;
-			x2 = a + (b - a) / goldenRatio;
-			f2 = parseExpression(expression, x2);
-		}
+
+		// Подсветка минимумов и максимумов
+		HighlightPoints(minPoints, System::Drawing::Color::Blue);
+		HighlightPoints(maxPoints, System::Drawing::Color::Green);
 	}
-	return (a + b) / 2;
 }
 
 
-double FindMaximum(char* expression, double a, double b) {
-	const double goldenRatio = (1 + sqrt(5)) / 2;
-
-	// Задаем точность поиска
-	const double epsilon = 1e-6;
-
-	// Вычисляем начальные точки
-	double x1 = b - (b - a) / goldenRatio;
-	double x2 = a + (b - a) / goldenRatio;
-
-	// Вычисляем значения функции в начальных точках
-	double f1 = parseExpression(expression, x1);
-	double f2 = parseExpression(expression, x2);
-
-	// Проводим итерации метода золотого сечения
-	while (fabs(b - a) > epsilon) {
-		if (f1 > f2) {
-			b = x2;
-			x2 = x1;
-			f2 = f1;
-			x1 = b - (b - a) / goldenRatio;
-			f1 = parseExpression(expression, x1);
-		}
-		else {
-			a = x1;
-			x1 = x2;
-			f1 = f2;
-			x2 = a + (b - a) / goldenRatio;
-			f2 = parseExpression(expression, x2);
-		}
+void kurs1::MyForm::HighlightPoints(List<DataPoint^>^ points, System::Drawing::Color color) {
+	for each (DataPoint ^ point in points) {
+		point->MarkerStyle = System::Windows::Forms::DataVisualization::Charting::MarkerStyle::Circle;
+		point->MarkerSize = 15;
+		point->MarkerColor = color;
 	}
-
-	return (a + b) / 2;
 }
 
 
 
-
-
-
-
-// Функция для поиска всех точек минимума
-std::vector<double> findAllMinimaGoldenSection(char* expression, double a, double b, int numPoints) {
-	const double goldenRatio = (1 + sqrt(5)) / 2;
-
-	std::vector<double> minima;  // Список найденных минимумов
-	double epsilon = 1e-6;
-	for (int i = 0; i < numPoints; ++i) {
-		double x1 = b - (b - a) / goldenRatio;
-		double x2 = a + (b - a) / goldenRatio;
-
-		double f1 = parseExpression(expression, x1);
-		double f2 = parseExpression(expression, x2);
-
-		while (fabs(b - a) > epsilon) {
-			if (f1 < f2) {
-				b = x2;
-				x2 = x1;
-				x1 = a + (b - a) / goldenRatio;
-
-				f2 = f1;
-				f1 = parseExpression(expression, x1);
-			}
-			else {
-				a = x1;
-				x1 = x2;
-				x2 = b - (b - a) / goldenRatio;
-
-				f1 = f2;
-				f2 = parseExpression(expression, x2);
-			}
-		}
-
-		// Добавляем найденные точки минимума в список
-		minima.push_back((a + b) / 2);
-
-		// Переходим к следующему интервалу
-		a = x1;
-		b = x2;
+void kurs1::MyForm::ShowMinMaxMessage(List<DataPoint^>^ minPoints, List<DataPoint^>^ maxPoints) {
+	// Вывод результатов в MessageBox
+	String^ resultMessage = "Минимумы:\n";
+	for each (DataPoint ^ point in minPoints) {
+		resultMessage += String::Format("X: {0:F2}, Y: {1:F2}\n", point->XValue, point->YValues[0]);
 	}
 
-	// Возвращаем список найденных минимумов
+	resultMessage += "\nМаксимумы:\n";
+	for each (DataPoint ^ point in maxPoints) {
+		resultMessage += String::Format("X: {0:F2}, Y: {1:F2}\n", point->XValue, point->YValues[0]);
+	}
+
+	MessageBox::Show(resultMessage, "Минимумы и максимумы");
+}
+
+
+double CalculateDerivative(DataPoint^ point1, DataPoint^ point2) {
+	if (point2->XValue == point1->XValue) {
+		// Обработка случая, когда точки имеют одинаковое значение X
+		return 0.0; 
+	}
+	// Вычисление производной между двумя точками
+	return (point2->YValues[0] - point1->YValues[0]) / (point2->XValue - point1->XValue);
+}
+
+List<DataPoint^>^ kurs1::MyForm::FindMinima(List<DataPoint^>^ points) {
+	if (isGraph1Built) {
+		List<DataPoint^>^ minimaPoints = gcnew List<DataPoint^>();
+		Solver sol;
+		char* expression = ConvertStringToCharArray(textBoxFunction1->Text);
+		if (!sol.Load(expression)) {
+			return nullptr;
+		}
+		double pastPos = sol.Solve(a - h1);
+		bool pastCons = pastPos > sol.Solve(a);
+		int count = 0;
+		double minimum = DBL_MAX;
+		for (double i = a; i <= b; i += h1) {
+			double y = sol.Solve(i);
+			bool currCons = pastPos > y;
+			if (pastCons && !currCons) {
+				//if (sol.Solve(i) < minimum) {
+				//	minimum = sol.Solve(i);
+				//	minimaPoints->Clear();
+				//}
+				chart->Series[4]->Points->AddXY(i, sol.Solve(i));
+				minimaPoints->Add(chart->Series[4]->Points[count]);
+				count++;
+			}
+			pastPos = y;
+			pastCons = currCons;
+		}
+		return minimaPoints;
+	}
+	else if (isGraph2Built) {
+		List<DataPoint^>^ minimaPoints = gcnew List<DataPoint^>();
+		Solver sol;
+		char* expression = ConvertStringToCharArray(textBoxFunction2->Text);
+		if (!sol.Load(expression)) {
+			return nullptr;
+		}
+		double pastPos = sol.Solve(a - h1);
+		bool pastCons = pastPos > sol.Solve(a);
+		int count = 0;
+		for (double i = a; i <= b; i += h1) {
+			double y = sol.Solve(i);
+			bool currCons = pastPos > y;
+			if (pastCons && !currCons) {
+				chart->Series[4]->Points->AddXY(i, sol.Solve(i));
+				minimaPoints->Add(chart->Series[4]->Points[count]);
+				count++;
+			}
+			pastPos = y;
+			pastCons = currCons;
+		}
+	    return minimaPoints;
+	}
+	/*List<DataPoint^>^ minimaPoints = gcnew List<DataPoint^>();*/
+
+	//for (int i = 1; i < points->Count - 1; ++i) {
+	//	double derivative1 = CalculateDerivative(points[i - 1], points[i]);
+	//	double derivative2 = CalculateDerivative(points[i], points[i + 1]);
+
+	//	// Проверка на изменение направления производной (минимум)
+	//	if (derivative1 > 0 && derivative2 < 0) {
+	//		minimaPoints->Add(points[i]);
+	//	}
+	//}
+
+	//return minimaPoints;
+}
+
+List<DataPoint^>^ kurs1::MyForm::FindMaxima(List<DataPoint^>^ points) {
+	if (isGraph1Built) {
+		List<DataPoint^>^ maximaPoints = gcnew List<DataPoint^>();
+		Solver sol;
+		char* expression = ConvertStringToCharArray(textBoxFunction1->Text);
+		if (!sol.Load(expression)) {
+			return nullptr;
+		}
+		double pastPos = sol.Solve(a - h1);
+		bool pastCons = pastPos > sol.Solve(a);
+		int count = 0;
+		double maximum = -DBL_MAX;
+		for (double i = a; i <= b; i += h1) {
+			double y = sol.Solve(i);
+			bool currCons = pastPos > y;
+			if (!pastCons && currCons) {
+				chart->Series[5]->Points->AddXY(i, sol.Solve(i));
+				maximaPoints->Add(chart->Series[5]->Points[count]);
+				count++;
+			}
+			pastPos = y;
+			pastCons = currCons;
+		}
+		return maximaPoints;
+	}
+	else if (isGraph2Built) {
+		List<DataPoint^>^ maximaPoints = gcnew List<DataPoint^>();
+		Solver sol;
+		char* expression = ConvertStringToCharArray(textBoxFunction2->Text);
+		if (!sol.Load(expression)) {
+			return nullptr;
+		}
+		double pastPos = sol.Solve(a - h1);
+		bool pastCons = pastPos > sol.Solve(a);
+		int count = 0;
+		double maximum = -DBL_MAX;
+		for (double i = a; i <= b; i += h1) {
+			double y = sol.Solve(i);
+			bool currCons = pastPos > y;
+			if (!pastCons && currCons) {
+				chart->Series[5]->Points->AddXY(i, sol.Solve(i));
+				maximaPoints->Add(chart->Series[5]->Points[count]);
+				count++;
+			}
+			pastPos = y;
+			pastCons = currCons;
+		}
+		return maximaPoints;
+	}
+	//List<DataPoint^>^ maximaPoints = gcnew List<DataPoint^>();
+
+	//for (int i = 1; i < points->Count - 1; ++i) {
+	//	double derivative1 = CalculateDerivative(points[i - 1], points[i]);
+	//	double derivative2 = CalculateDerivative(points[i], points[i + 1]);
+
+	//	// Проверка на изменение направления производной (максимум)
+	//	if (derivative1 < 0 && derivative2 > 0) {
+	//		maximaPoints->Add(points[i]);
+	//	}
+	//}
+
+	//return maximaPoints;
+}
+
+void kurs1::MyForm::checkBox_minmax1_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+	if (checkBox_minmax1->Checked) {
+		List<DataPoint^>^ allPoints = gcnew List<DataPoint^>();
+
+		if (isGraph1Built) {
+			// Собираем все точки с графика в один список
+			for each (Series ^ series in chart->Series) {
+				allPoints->AddRange(series->Points);
+			}
+
+			// Ищем минимумы и максимумы
+			List<DataPoint^>^ minimaPoints = FindMinima(allPoints);
+			List<DataPoint^>^ maximaPoints = FindMaxima(allPoints);
+
+			// Подсветка минимумов и максимумов
+			HighlightPoints(minimaPoints, System::Drawing::Color::Yellow);
+			HighlightPoints(maximaPoints, System::Drawing::Color::Green);
+
+			// Вывод результатов в MessageBox
+			ShowMinMaxMessage(minimaPoints, maximaPoints);
+		}
+		else {
+			checkBox_minmax1->Checked = false;
+			MessageBox::Show("График не построен.", "Внимание!");
+		}
+	}
+	else {
+		chart->Series[4]->Points->Clear();
+		chart->Series[5]->Points->Clear();
+	}
+}
+
+
+
+System::Void kurs1::MyForm::checkBox_minmax2_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+	if (checkBox_minmax2->Checked) {
+		List<DataPoint^>^ allPoints = gcnew List<DataPoint^>();
+
+		if (isGraph2Built) {
+			// Собираем все точки с графика в один список
+			for each (Series ^ series in chart->Series) {
+				allPoints->AddRange(series->Points);
+			}
+
+			// Ищем минимумы и максимумы
+			List<DataPoint^>^ minimaPoints = FindMinima(allPoints);
+			List<DataPoint^>^ maximaPoints = FindMaxima(allPoints);
+
+			// Подсветка минимумов и максимумов
+			HighlightPoints(minimaPoints, System::Drawing::Color::Yellow);
+			HighlightPoints(maximaPoints, System::Drawing::Color::Green);
+
+			// Вывод результатов в MessageBox
+			ShowMinMaxMessage(minimaPoints, maximaPoints);
+		}
+		else {
+			checkBox_minmax2->Checked = false;
+			MessageBox::Show("График не построен.", "Внимание!");
+		}
+	}
+	else {
+		chart->Series[4]->Points->Clear();
+		chart->Series[5]->Points->Clear();
+	}
+}
+
+
+List<DataPoint^>^ kurs1::MyForm::FindGlobalMinima(List<DataPoint^>^ Points) {
+	double minY = DBL_MAX;
+	List<DataPoint^>^ minima = gcnew List<DataPoint^>();
+
+	// Находим самое минимальное значение Y
+	for each (DataPoint ^ point in Points) {
+		double yValue = point->YValues[0];
+		if (yValue < minY) {
+			minY = yValue;
+		}
+	}
+
+	// Добавляем все точки, в которых достигнуто минимальное значение Y
+	for each (DataPoint ^ point in Points) {
+		double yValue = point->YValues[0];
+		if (Math::Round(yValue,3) == Math::Round(minY,3)) {
+			minima->Add(point);
+		}
+	}
+
 	return minima;
 }
 
-// Функция для поиска всех точек максимума
-std::vector<double> findAllMaximaGoldenSection(char* expression, double a, double b, int numPoints) {
-	const double goldenRatio = (1 + sqrt(5)) / 2;
+List<DataPoint^>^ kurs1::MyForm::FindGlobalMaxima(List<DataPoint^>^ Points) {
+	double maxY = -DBL_MAX;
+	List<DataPoint^>^ maxima = gcnew List<DataPoint^>();
 
-	std::vector<double> maxima;  // Список найденных максимумов
-	double epsilon = 1e-6;
-	for (int i = 0; i < numPoints; ++i) {
-		double x1 = b - (b - a) / goldenRatio;
-		double x2 = a + (b - a) / goldenRatio;
-
-		double f1 = parseExpression(expression, x1);
-		double f2 = parseExpression(expression, x2);
-
-		while (fabs(b - a) > epsilon) {
-			if (f1 > f2) {
-				b = x2;
-				x2 = x1;
-				x1 = a + (b - a) / goldenRatio;
-
-				f2 = f1;
-				f1 = parseExpression(expression, x1);
-			}
-			else {
-				a = x1;
-				x1 = x2;
-				x2 = b - (b - a) / goldenRatio;
-
-				f1 = f2;
-				f2 = parseExpression(expression, x2);
-			}
+	// Находим самое максимальное значение Y
+	for each (DataPoint ^ point in Points) {
+		double yValue = point->YValues[0];
+		if (yValue > maxY) {
+			maxY = yValue;
 		}
-
-		// Добавляем найденные точки максимума в список
-		maxima.push_back((a + b) / 2);
-
-		// Переходим к следующему интервалу
-		a = x1;
-		b = x2;
 	}
 
-	// Возвращаем список найденных максимумов
+	// Добавляем все точки, в которых достигнуто максимальное значение Y
+	for each (DataPoint ^ point in Points) {
+		double yValue = point->YValues[0];
+		if (Math::Round(yValue,3) == Math::Round(maxY,3)) {
+			maxima->Add(point);
+		}
+	}
+
 	return maxima;
 }
 
-System::Void kurs1::MyForm::checkBox_minmax1_CheckedChanged(System::Object^ sender, System::EventArgs^ e)
-{
-	if (checkBox_minmax1->Checked && radioButton3->Checked) {
-		try {
-			// Проверяем наличие значений в текстбоксах
-			if (textBox1->Text == "" || textBox2->Text == "" || textBox3->Text == "") {
-				MessageBox::Show("Введите параметры для поиска минимума и максимума.", "Внимание!");
-				checkBox_minmax1->Checked = false; // Снимаем выбор чекбокса
-				return;
+
+
+
+
+void kurs1::MyForm::checkBox_globminmax1_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+	if (checkBox_globminmax1->Checked) {
+		List<DataPoint^>^ allPoints = gcnew List<DataPoint^>();
+
+		if (isGraph1Built) {
+			// Собираем все точки с графика в один список
+			for each (Series ^ series in chart->Series) {
+				allPoints->AddRange(series->Points);
 			}
+			// Разделяем минимумы и максимумы
+			List<DataPoint^>^ minima = FindGlobalMinima(allPoints);
+			List<DataPoint^>^ maxima = FindGlobalMaxima(allPoints);
 
-			// Получаем значения из текстбоксов
-			double a = Convert::ToDouble(textBox1->Text);
-			double b = Convert::ToDouble(textBox2->Text);
+			// Подсветка минимумов и максимумов
+			HighlightPoints(minima, System::Drawing::Color::Blue);
+			HighlightPoints(maxima, System::Drawing::Color::Green);
 
-			// Получаем текст выражения из текстбокса
-			char* expression1 = ConvertStringToCharArray(textBoxFunction1->Text);
-
-			// Вызываем функции поиска всех точек минимума и максимума для первой функции
-			std::vector<double> allMinima = findAllMinimaGoldenSection(expression1, a, b, 5);
-			std::vector<double> allMaxima = findAllMaximaGoldenSection(expression1, a, b, 5);
-
-			// Выводим результат в MessageBox или другой способ, который вы предпочитаете
-			String^ resultMessage = "Все точки минимума функции 1: ";
-			for (double minimum : allMinima) {
-				resultMessage += minimum.ToString() + " ";
-			}
-			resultMessage += "\nВсе точки максимума функции 1: ";
-			for (double maximum : allMaxima) {
-				resultMessage += maximum.ToString() + " ";
-			}
-
-			MessageBox::Show(resultMessage, "Результат");
-			checkBox_minmax1->Checked = false;
-		}
-		catch (System::FormatException^ ex) {
-			// Обработка ошибки, связанной с некорректным форматом числа
-			MessageBox::Show("Ошибка формата числа. Проверьте введенные значения.", "Ошибка");
-		}
-		catch (System::Exception^ ex) {
-			// Обработка других исключений
-			MessageBox::Show("Произошла ошибка: " + ex->Message, "Ошибка");
-		}
-	}
-	else if (!radioButton3->Checked) {
-		MessageBox::Show("График функции отсутствует / функция не задана", "Внимание!");
-		checkBox_minmax1->Checked = false;
-		return;
-	}
-}
-
-
-//
-//System::Void kurs1::MyForm::checkBox_minmax1_CheckedChanged(System::Object^ sender, System::EventArgs^ e)
-//{
-//	if (checkBox_minmax1->Checked && radioButton3->Checked) {
-//		try {
-//			// Проверяем наличие значений в текстбоксах
-//			if (textBox1->Text == "" || textBox2->Text == "" || textBox3->Text == "") {
-//				MessageBox::Show("Введите параметры для поиска минимума и максимума.", "Внимание!");
-//				checkBox_minmax1->Checked = false; // Снимаем выбор чекбокса
-//				return;
-//			}
-//
-//			// Получаем значения из текстбоксов
-//			double a = Convert::ToDouble(textBox1->Text);
-//			double b = Convert::ToDouble(textBox2->Text);
-//
-//			// Получаем текст выражения из текстбокса
-//			char* expression1 = ConvertStringToCharArray(textBoxFunction1->Text);
-//
-//			// Вызываем функцию поиска минимума и максимума для первой функции
-//			double minimum1 = FindMinimum(expression1, a, b);
-//			double maximum1 = FindMaximum(expression1, a, b);
-//
-//			// Выводим результат в MessageBox или другой способ, который вы предпочитаете
-//			MessageBox::Show("Минимум функции 1: " + minimum1 + "\nМаксимум функции 1: " + maximum1, "Результат");
-//			checkBox_minmax1->Checked = false;
-//		}
-//		catch (System::FormatException^ ex) {
-//			// Обработка ошибки, связанной с некорректным форматом числа
-//			MessageBox::Show("Ошибка формата числа. Проверьте введенные значения.", "Ошибка");
-//		}
-//		catch (System::Exception^ ex) {
-//			// Обработка других исключений
-//			MessageBox::Show("Произошла ошибка: " + ex->Message, "Ошибка");
-//		}
-//	}
-//	else if (!radioButton3->Checked) {
-//		MessageBox::Show("График функции отсутствует / функция не задана", "Внимание!");
-//		checkBox_minmax1->Checked = false;
-//		return;
-//	}
-//}
-
-System::Void kurs1::MyForm::checkBox_minmax2_CheckedChanged(System::Object^ sender, System::EventArgs^ e)
-{
-	if (checkBox_minmax2->Checked && radioButton5->Checked) {
-		try {
-			// Проверяем наличие значений в текстбоксах
-			if (textBox4->Text == "" || textBox5->Text == "" || textBox6->Text == "") {
-				MessageBox::Show("Введите параметры для поиска минимума и максимума.", "Внимание!");
-				checkBox_minmax2->Checked = false; // Снимаем выбор чекбокса
-				return;
-			}
-
-			// Получаем значения из текстбоксов
-			double с = Convert::ToDouble(textBox4->Text);
-			double d = Convert::ToDouble(textBox5->Text);
-
-			// Получаем текст выражения из текстбокса
-			char* expression2 = ConvertStringToCharArray(textBoxFunction2->Text);
-
-			// Вызываем функцию поиска минимума и максимума для первой функции
-			double minimum2 = FindMinimum(expression2, c, d);
-			double maximum2 = FindMaximum(expression2, c, d);
-
-			// Выводим результат в MessageBox или другой способ, который вы предпочитаете
-			MessageBox::Show("Минимум функции 2: " + minimum2 + "\nМаксимум функции 2: " + maximum2, "Результат");
-			checkBox_minmax1->Checked = false;
-		}
-		catch (System::FormatException^ ex) {
-			// Обработка ошибки, связанной с некорректным форматом числа
-			MessageBox::Show("Ошибка формата числа. Проверьте введенные значения.", "Ошибка");
-		}
-		catch (System::Exception^ ex) {
-			// Обработка других исключений
-			MessageBox::Show("Произошла ошибка: " + ex->Message, "Ошибка");
-		}
-	}
-	else if (!radioButton5->Checked) {
-		MessageBox::Show("График функции отсутствует / функция не задана", "Внимание!");
-		checkBox_minmax2->Checked = false;
-		return;
-	}
-}
-
-// Функция для поиска точки пересечения двух функций методом бисекции
-double findIntersection(char* expression1, char* expression2, double a, double b) {
-	const double EPSILON = 1e-9;
-
-	double fa = parseExpression(expression1, a) - parseExpression(expression2, a);
-
-	// Проверка, возможно, одна из точек уже является пересечением
-	if (fabs(fa) < EPSILON) {
-		return a;
-	}
-
-	double fb = parseExpression(expression1, b) - parseExpression(expression2, b);
-
-	// Проверка, возможно, одна из точек уже является пересечением
-	if (fabs(fb) < EPSILON) {
-		return b;
-	}
-
-	// Проверка, возможно, начальные точки уже являются пересечением
-	if (fa * fb > 0) {
-		return std::numeric_limits<double>::quiet_NaN();  // Нет корня на данном интервале
-	}
-
-	while (b - a >= EPSILON) {
-		double c = (a + b) / 2;
-		double fc = parseExpression(expression1, c) - parseExpression(expression2, c);
-
-		// Проверка, возможно, текущая точка уже является пересечением
-		if (fabs(fc) < EPSILON) {
-			return c;
-		}
-
-		// Ищем корень на половине интервала
-		if (fc * fa < 0) {
-			b = c;
+			// Вывод результатов в MessageBox
+			ShowMinMaxMessage(minima, maxima);
 		}
 		else {
-			a = c;
-			fa = fc;
+			checkBox_globminmax1->Checked = false;
+			MessageBox::Show("График не построен.", "Внимание!");
+		}
+	}
+	else {
+		List<DataPoint^>^ allPoints = gcnew List<DataPoint^>();
+		for each (Series ^ series in chart->Series) {
+			allPoints->AddRange(series->Points);
+		}
+		List<DataPoint^>^ minima = FindGlobalMinima(allPoints);
+		List<DataPoint^>^ maxima = FindGlobalMaxima(allPoints);
+		HighlightPoints(minima, System::Drawing::Color::Transparent);
+		HighlightPoints(maxima, System::Drawing::Color::Transparent);
+	}
+}
+
+
+void kurs1::MyForm::checkBox_globminmax2_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+	if (checkBox_globminmax2->Checked) {
+		List<DataPoint^>^ allPoints = gcnew List<DataPoint^>();
+
+		if (isGraph2Built) {
+			// Собираем все точки с графика в один список
+			for each (Series ^ series in chart->Series) {
+				allPoints->AddRange(series->Points);
+			}
+			// Разделяем минимумы и максимумы
+			List<DataPoint^>^ minima = FindGlobalMinima(allPoints);
+			List<DataPoint^>^ maxima = FindGlobalMaxima(allPoints);
+
+			// Подсветка минимумов и максимумов
+			HighlightPoints(minima, System::Drawing::Color::Blue);
+			HighlightPoints(maxima, System::Drawing::Color::Green);
+
+			// Вывод результатов в MessageBox
+			ShowMinMaxMessage(minima, maxima);
+		}
+		else {
+			checkBox_globminmax2->Checked = false;
+			MessageBox::Show("График не построен.", "Внимание!");
+		}
+	}
+	else {
+		List<DataPoint^>^ allPoints = gcnew List<DataPoint^>();
+		for each (Series ^ series in chart->Series) {
+			allPoints->AddRange(series->Points);
+		}
+		List<DataPoint^>^ minima = FindGlobalMinima(allPoints);
+		List<DataPoint^>^ maxima = FindGlobalMaxima(allPoints);
+		HighlightPoints(minima, System::Drawing::Color::Transparent);
+		HighlightPoints(maxima, System::Drawing::Color::Transparent);
+	}
+}
+
+
+
+
+
+
+
+
+
+DataPoint^ FindClosestPoint(DataPoint^ targetPoint, DataPointCollection^ points, double epsilon) {
+	DataPoint^ closestPoint = nullptr;
+	double minDistance = DBL_MAX;
+
+	for each (DataPoint ^ point in points) {
+		double distanceX = Math::Abs(targetPoint->XValue - point->XValue);
+		double distanceY = Math::Abs(targetPoint->YValues[0] - point->YValues[0]);
+
+		if (distanceX < epsilon && distanceY < epsilon && distanceX + distanceY < minDistance) {
+			minDistance = distanceX + distanceY;
+			closestPoint = point;
 		}
 	}
 
-	return (a + b) / 2;  // Возвращаем середину найденного интервала
+	return closestPoint;
 }
 
-double kurs1::MyForm::MyFunction1(double x) {
-	// Считываем текст функции из текстбокса
-	char* expression1 = ConvertStringToCharArray(textBoxFunction1->Text);
-
-	// Оцениваем функцию в заданной точке
-	return parseExpression(expression1, x);
-}
-
-
-//std::vector<double> findAllIntersections(char* expression1, char* expression2, double a, double b, double step) {
-//	std::vector<double> intersections;
-//	double epsilon = 1e-9;
-//	for (double x = a; x <= b; x += step) {
-//		double y1 = parseExpression(expression1, x);
-//		double y2 = parseExpression(expression2, x);
-//
-//		// Проверяем, произошло ли пересечение
-//		if (fabs(y1 - y2) < epsilon) {
-//			intersections.push_back(x);
+//List<DataPoint^>^ kurs1::MyForm::FindIntersectionPoints(Series^ series1, Series^ series2, double epsilon) {
+//	List<DataPoint^>^ intersectPoints = gcnew List<DataPoint^>();
+//	Solver difference;
+//	Solver sol;
+//	char* expression1 = ConvertStringToCharArray(textBoxFunction1->Text);
+//	char* expression = ConvertStringToCharArray(textBoxFunction1->Text + " - " + textBoxFunction2->Text);
+//	if (!difference.Load(expression)) {
+//		return nullptr;
+//	}
+//	if (!sol.Load(expression1)) {
+//		return nullptr;
+//	}
+//	double pastPos = abs(difference.Solve(a - h1));
+//	int count = 0;
+//	bool pastCons = false;
+//	for (double i = a; i <= b; i += h1) {
+//		double y = difference.Solve(i);
+//		double absy = abs(y);
+//		bool currCons = pastPos > absy;
+//		if (pastCons && !currCons) {
+//			chart->Series[2]->Points->AddXY(i, sol.Solve(i));
+//			intersectPoints->Add(chart->Series[2]->Points[count]);
+//			count++;
 //		}
+//		pastPos = absy;
+//		pastCons = currCons;
 //	}
-//
-//	return intersections;
-//}
-//
-//
-//
-//void kurs1::MyForm::DisplayAllIntersections(std::vector<double> intersections) {
-//	System::Windows::Forms::DataVisualization::Charting::Series^ intersectionSeries = nullptr;
-//
-//	// Поиск серии точек пересечения в существующих сериях
-//	for each (System::Windows::Forms::DataVisualization::Charting::Series ^ series in chart->Series) {
-//		if (series->Name == "IntersectionSeries") {
-//			intersectionSeries = series;
-//			break;
-//		}
-//	}
-//	// Если серии точек пересечения нет, создайте новую серию
-//	if (intersectionSeries == nullptr) {
-//		intersectionSeries = gcnew System::Windows::Forms::DataVisualization::Charting::Series();
-//		intersectionSeries->Name = "IntersectionSeries";
-//		chart->Series->Add(intersectionSeries);
-//	}
-//
-//	// Очистите предыдущие точки в серии точек пересечения
-//	intersectionSeries->Points->Clear();
-//
-//	// Создайте новые точки пересечения и добавьте их к серии точек пересечения
-//	for (double intersection : intersections) {
-//		System::Windows::Forms::DataVisualization::Charting::DataPoint^ intersectionPoint = gcnew System::Windows::Forms::DataVisualization::Charting::DataPoint(intersection, MyFunction1(intersection));
-//		intersectionPoint->MarkerStyle = System::Windows::Forms::DataVisualization::Charting::MarkerStyle::Circle;
-//		intersectionPoint->MarkerSize = 10;
-//		intersectionPoint->Color = System::Drawing::Color::Red;
-//		intersectionSeries->Points->Add(intersectionPoint);
-//	}
-//
-//	// Обновите график
-//	chart->Invalidate();
 //}
 
-void kurs1::MyForm::DisplayIntersectionPoint(double x) {
-	// Предполагается, что у вас уже есть существующие графики в chart1
 
-	System::Windows::Forms::DataVisualization::Charting::Series^ intersectionSeries = nullptr;
+List<DataPoint^>^ kurs1::MyForm::FindIntersectionPoints(Series^ series1, Series^ series2, double epsilon) {
+	List<DataPoint^>^ intersectPoints = gcnew List<DataPoint^>();
 
-	// Поиск серии точек пересечения в существующих сериях
-	for each (System::Windows::Forms::DataVisualization::Charting::Series ^ series in chart->Series) {
-		if (series->Name == "IntersectionSeries") {
-			intersectionSeries = series;
-			break;
+	for (int i = 0; i < series1->Points->Count; ++i) {
+		DataPoint^ point1 = series1->Points[i];
+		DataPoint^ closestPoint = FindClosestPoint(point1, series2->Points, epsilon);
+		
+		if (closestPoint != nullptr) {
+			intersectPoints->Add(point1);
 		}
 	}
+	return intersectPoints;
+}
 
-	// Если серии точек пересечения нет, создайте новую серию
-	if (intersectionSeries == nullptr) {
-		intersectionSeries = gcnew System::Windows::Forms::DataVisualization::Charting::Series();
-		intersectionSeries->Name = "IntersectionSeries";
-		chart->Series->Add(intersectionSeries);
+void kurs1::MyForm::HighlightIntersectionPoints(List<DataPoint^>^ intersectPoints, System::Drawing::Color color) {
+	for each (DataPoint ^ point in intersectPoints) {
+		point->MarkerColor = color;
+		point->MarkerStyle = System::Windows::Forms::DataVisualization::Charting::MarkerStyle::Circle; // или другой стиль маркера
+		point->MarkerSize = 10; // или другой размер маркера
 	}
-
-	// Очистите предыдущие точки в серии точек пересечения
-	intersectionSeries->Points->Clear();
-
-	// Создайте новую точку пересечения и добавьте ее к серии точек пересечения
-	System::Windows::Forms::DataVisualization::Charting::DataPoint^ intersectionPoint = gcnew System::Windows::Forms::DataVisualization::Charting::DataPoint(x, MyFunction1(x));
-	intersectionPoint->MarkerStyle = System::Windows::Forms::DataVisualization::Charting::MarkerStyle::Circle;
-	intersectionPoint->MarkerSize = 10;
-	intersectionPoint->Color = System::Drawing::Color::Red;
-	intersectionSeries->Points->Add(intersectionPoint);
-
-	// Обновите график
-	chart->Invalidate();
 }
 
 
+void kurs1::MyForm::ShowIntersectionMessage(List<DataPoint^>^ intersectionPoints) {
+	// Вывод результатов в MessageBox
+	String^ resultMessage = "Точки пересечения:\n";
+	for each (DataPoint ^ point in intersectionPoints) {
+		resultMessage += String::Format("X: {0:F2}, Y: {1:F2}\n", point->XValue, point->YValues[0]);
+	}
 
-
+	MessageBox::Show(resultMessage, "Точки пересечения");
+}
 
 
 
 System::Void kurs1::MyForm::checkBox_searchCross_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
-	if (checkBox_searchCross->Checked && radioButton4->Checked) {
-		try {
-			// Проверяем наличие значений в текстбоксах
-			if (textBox1->Text == "" || textBox2->Text == "" || textBox3->Text == "" || textBox4->Text == "" || textBox5->Text == "" || textBox6->Text == "") {
-				MessageBox::Show("Введите параметры для поиска пересечения.", "Внимание!");
-				checkBox_searchCross->Checked = false; // Снимаем выбор чекбокса
-				return;
-			}
+	if (checkBox_searchCross->Checked) {
+		Series^ series1 = chart->Series[0];
+		Series^ series2 = chart->Series[1];
 
-			// Получаем значения из текстбоксов
-			double a1 = Convert::ToDouble(textBox1->Text);
-			double b1 = Convert::ToDouble(textBox2->Text);
-			double h1 = Convert::ToDouble(textBox3->Text);
+		// Находим точки пересечения
+		List<DataPoint^>^ intersectPoints = FindIntersectionPoints(series1, series2, 0.01); 
 
-			double a2 = Convert::ToDouble(textBox4->Text);
-			double b2 = Convert::ToDouble(textBox5->Text);
-			double h2 = Convert::ToDouble(textBox6->Text);
-
-			// Получаем текст выражений из текстбоксов
-			char* expression1 = ConvertStringToCharArray(textBoxFunction1->Text);
-			char* expression2 = ConvertStringToCharArray(textBoxFunction2->Text);
-			// Вызываем функцию поиска всех точек пересечения
-			/*std::vector<double> allIntersections = findAllIntersections(expression1, expression2, Math::Max(a1, a2), Math::Min(b1, b2), 0.01);*/
-			// Вызываем функцию поиска точки пересечения
-			double intersectionPoint = findIntersection(expression1, expression2, a1, b1);
-			// Выводим результат в MessageBox или другой способ, который вы предпочитаете
-			String^ resultMessage = "Все точки пересечения функций: ";
-			//for (double intersection : allIntersections) {
-			//	resultMessage += intersection.ToString() + " ";
-			//}
-			// Создаем график и отображаем точку пересечения
-			DisplayIntersectionPoint(intersectionPoint);
-
-			//MessageBox::Show(resultMessage, "Результат");
-			MessageBox::Show("Точка пересечения функций: " + intersectionPoint.ToString(), "Результат");
-		}
-		catch (System::FormatException^ ex) {
-			// Обработка ошибки, связанной с некорректным форматом числа
-			MessageBox::Show("Ошибка формата числа. Проверьте введенные значения.", "Ошибка");
-		}
-		catch (System::Exception^ ex) {
-			// Обработка других исключений
-			MessageBox::Show("Произошла ошибка: " + ex->Message, "Ошибка");
-		}
+		// Подсветка точек пересечения
+		HighlightIntersectionPoints(intersectPoints, System::Drawing::Color::Green);
+		ShowIntersectionMessage(intersectPoints);
 	}
-	else if (!radioButton4->Checked) {
-		MessageBox::Show("График функций отсутствует / функции не задана", "Внимание!");
-		checkBox_searchCross->Checked = false;
-		return;
+	else {
+		// Убираем подсветку при отключении опции
+		chart->Series[2]->Points->Clear();
 	}
 }
+
+
+
+
+
+bool isMouseOverChart = false;
+// Обработчик события MouseMove 
+System::Void kurs1::MyForm::chart_MouseMove(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
+	if (isMouseOverChart && (isGraph1Built || isGraph2Built)) {
+		// Получение текущих координат мыши
+		double xValue = chart->ChartAreas[0]->AxisX->PixelPositionToValue(e->X);
+		double yValue = chart->ChartAreas[0]->AxisY->PixelPositionToValue(e->Y);
+
+		// Проверка близости к какой-либо точке графика, только если график построен
+		if (isGraph1Built || isGraph2Built) {
+			for each (System::Windows::Forms::DataVisualization::Charting::Series ^ series in chart->Series) {
+				for each (System::Windows::Forms::DataVisualization::Charting::DataPoint ^ point in series->Points) {
+					double distance = Math::Sqrt(Math::Pow(point->XValue - xValue, 2) + Math::Pow(point->YValues[0] - yValue, 2));
+
+					// Установка размера 
+					double highlightSize = 0.1;
+
+					// Если курсор близко к точке, подсветите ее
+					if (distance < highlightSize) {
+						point->MarkerStyle = System::Windows::Forms::DataVisualization::Charting::MarkerStyle::Circle;
+						point->MarkerSize = 10;
+						point->MarkerColor = System::Drawing::Color::Red;
+					}
+					else {
+						// Если курсор не близко к точке, верните обычный стиль
+						point->MarkerStyle = System::Windows::Forms::DataVisualization::Charting::MarkerStyle::None;
+					}
+				}
+			}
+		}
+
+		// Вывод координат в пользовательском интерфейсе
+		labelCoordinates->Text = String::Format("X: {0:F2}, Y: {1:F2}", xValue, yValue);
+	}
+}
+
+
+
+// Обработчик события MouseLeave для вашего Chart
+System::Void kurs1::MyForm::chart_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
+	// Очистите текст при покидании области графика
+	labelCoordinates->Text = "";
+	isMouseOverChart = false;
+}
+
+// Обработчик события MouseEnter для вашего Chart
+System::Void kurs1::MyForm::chart_MouseEnter(System::Object^ sender, System::EventArgs^ e) {
+	// Установите флаг, когда мышь находится над областью графика
+	isMouseOverChart = true;
+}
+
+//кнопки перемещения
+System::Void kurs1::MyForm::buttonPanDown_Click(System::Object^ sender, System::EventArgs^ e)
+{
+	// Перемещение вниз
+	chart->ChartAreas[0]->AxisY->Minimum -= 1.0;
+	chart->ChartAreas[0]->AxisY->Maximum -= 1.0;
+	return System::Void();
+}
+
+//кнопки перемещения
+System::Void kurs1::MyForm::buttonPanUp_Click(System::Object^ sender, System::EventArgs^ e)
+{
+	// Перемещение вверх
+	chart->ChartAreas[0]->AxisY->Minimum += 1.0;
+	chart->ChartAreas[0]->AxisY->Maximum += 1.0;
+	return System::Void();
+}
+
+//кнопки перемещения
+System::Void kurs1::MyForm::buttonPanLeft_Click(System::Object^ sender, System::EventArgs^ e)
+{
+	// Перемещение влево
+	chart->ChartAreas[0]->AxisX->Minimum -= 1.0;
+	chart->ChartAreas[0]->AxisX->Maximum -= 1.0;
+	return System::Void();
+}
+
+//кнопки перемещения
+System::Void kurs1::MyForm::buttonPanRight_Click(System::Object^ sender, System::EventArgs^ e)
+{
+	// Перемещение вправо
+	chart->ChartAreas[0]->AxisX->Minimum += 1.0;
+	chart->ChartAreas[0]->AxisX->Maximum += 1.0;
+	return System::Void();
+}
+
+System::Void kurs1::MyForm::buttonZoomIn_Click(System::Object^ sender, System::EventArgs^ e)
+{
+	chart->ChartAreas[0]->AxisX->ScaleView->Zoom(2, this->chart->ChartAreas[0]->AxisX->Minimum);
+	chart->ChartAreas[0]->AxisY->ScaleView->Zoom(2, this->chart->ChartAreas[0]->AxisY->Minimum);
+}
+
+System::Void kurs1::MyForm::buttonZoomOut_Click(System::Object^ sender, System::EventArgs^ e)
+{
+	chart->ChartAreas[0]->AxisX->ScaleView->Zoom(0.5, chart->ChartAreas[0]->AxisX->Minimum);
+	chart->ChartAreas[0]->AxisY->ScaleView->Zoom(0.5, chart->ChartAreas[0]->AxisY->Minimum);
+}
+
+
 
 
