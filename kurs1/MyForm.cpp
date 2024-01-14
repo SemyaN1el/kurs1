@@ -31,6 +31,8 @@ System::Void kurs1::MyForm::buttonClear_Click(System::Object^ sender, System::Ev
 	radioButton5->Checked = false;
 	checkBox_minmax1->Checked = false;
 	checkBox_minmax2->Checked = false;
+	checkBox_globminmax1->Checked = false;
+	checkBox_globminmax2->Checked = false;
 	checkBox_searchCross->Checked = false;
 }
 
@@ -39,6 +41,9 @@ System::Void kurs1::MyForm::buttonResetCheckbox_Click(System::Object^ sender, Sy
 	checkBox_minmax1->Checked = false;
 	checkBox_minmax2->Checked = false;
 	checkBox_searchCross->Checked = false;
+	checkBox_globminmax1->Checked = false;
+	checkBox_globminmax2->Checked = false;
+
 }
 
 
@@ -96,6 +101,7 @@ char* ConvertStringToCharArray(System::String^ str) {
 }
 
 
+
 void kurs1::MyForm::BuildFirstGraph()
 {
 
@@ -111,12 +117,25 @@ void kurs1::MyForm::BuildFirstGraph()
 	x1 = a;
 	Solver sol1;
 	char* expression = ConvertStringToCharArray(textBoxFunction1->Text);
-	if (sol1.Load(expression)) {
-		while (x1 <= b) {
+	if (!sol1.Load(expression)) {
+		return;
+	}
+	double epsilon = 0.1;
+	while (x1 <= b) {
+		double derivative = (sol1.Solve(x1 + h1) - sol1.Solve(x1 - h1)) / (2 * h1);
+	/*	if (!std::isnan(derivative) || !std::isinf(derivative)) {*/
+		if (abs(derivative) < 90){
 			y1 = sol1.Solve(x1);
 			this->chart->Series[0]->Points->AddXY(x1, y1);
-			x1 += 0.01;
+			//x1 += 0.01;
 		}
+		else {
+			this->chart->Series[0]->Points->AddXY(x1, Double::NaN);
+		}
+		x1 += 0.01;
+		//y1 = sol1.Solve(x1);
+		//this->chart->Series[0]->Points->AddXY(x1, y1);
+		//x1 += 0.01;
 	}
 	DrawAxes();
 	x1 = a;
@@ -139,9 +158,20 @@ void kurs1::MyForm::BuildSecondGraph()
 	char* expression = ConvertStringToCharArray(textBoxFunction2->Text);
 	if (sol1.Load(expression)) {
 		while (x2 <= b) {
-			y2 = sol1.Solve(x2);
-			this->chart->Series[1]->Points->AddXY(x2, y2);
+			double derivative = (sol1.Solve(x2 + h1) - sol1.Solve(x2 - h1)) / (2 * h1);
+			/*	if (!std::isnan(derivative) || !std::isinf(derivative)) {*/
+			if (abs(derivative) < 90) {
+				y2 = sol1.Solve(x2);
+				this->chart->Series[1]->Points->AddXY(x2, y2);
+				//x1 += 0.01;
+			}
+			else {
+				this->chart->Series[1]->Points->AddXY(x2, Double::NaN);
+			}
 			x2 += 0.01;
+			//y1 = sol1.Solve(x1);
+			//this->chart->Series[0]->Points->AddXY(x1, y1);
+			//x1 += 0.01;
 		}
 	}
 	DrawAxes();
@@ -163,17 +193,39 @@ void kurs1::MyForm::BuildTwoGraphs()
 	Solver sol2;
 	if (sol1.Load(expression1)) {
 		while (x1 <= b) {
-			y1 = sol1.Solve(x1);
-			this->chart->Series[0]->Points->AddXY(x1, y1);
+			double derivative = (sol1.Solve(x1 + h1) - sol1.Solve(x1 - h1)) / (2 * h1);
+			/*	if (!std::isnan(derivative) || !std::isinf(derivative)) {*/
+			if (abs(derivative) < 90) {
+				y1 = sol1.Solve(x1);
+				this->chart->Series[0]->Points->AddXY(x1, y1);
+				//x1 += 0.01;
+			}
+			else {
+				this->chart->Series[0]->Points->AddXY(x1, Double::NaN);
+			}
 			x1 += 0.01;
+			//y1 = sol1.Solve(x1);
+			//this->chart->Series[0]->Points->AddXY(x1, y1);
+			//x1 += 0.01;
 		}
 	}
 	x1 = a;
 	if (sol2.Load(expression2)) {
 		while (x2 <= b) {
-			y2 = sol2.Solve(x2);
-			this->chart->Series[1]->Points->AddXY(x2, y2);
+			double derivative = (sol2.Solve(x2 + h1) - sol2.Solve(x2 - h1)) / (2 * h1);
+			/*	if (!std::isnan(derivative) || !std::isinf(derivative)) {*/
+			if (abs(derivative) < 90) {
+				y2 = sol2.Solve(x2);
+				this->chart->Series[1]->Points->AddXY(x2, y2);
+				//x1 += 0.01;
+			}
+			else {
+				this->chart->Series[1]->Points->AddXY(x2, Double::NaN);
+			}
 			x2 += 0.01;
+			//y1 = sol1.Solve(x1);
+			//this->chart->Series[0]->Points->AddXY(x1, y1);
+			//x1 += 0.01;
 		}
 	}
 	DrawAxes();
