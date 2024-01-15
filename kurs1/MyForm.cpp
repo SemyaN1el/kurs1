@@ -34,6 +34,7 @@ System::Void kurs1::MyForm::buttonClear_Click(System::Object^ sender, System::Ev
 	checkBox_globminmax1->Checked = false;
 	checkBox_globminmax2->Checked = false;
 	checkBox_searchCross->Checked = false;
+	DrawAxes();
 }
 
 System::Void kurs1::MyForm::buttonResetCheckbox_Click(System::Object^ sender, System::EventArgs^ e)
@@ -43,6 +44,12 @@ System::Void kurs1::MyForm::buttonResetCheckbox_Click(System::Object^ sender, Sy
 	checkBox_searchCross->Checked = false;
 	checkBox_globminmax1->Checked = false;
 	checkBox_globminmax2->Checked = false;
+	chart->Series[4]->Points->Clear();
+	chart->Series[5]->Points->Clear();
+	chart->Series[6]->Points->Clear();
+	chart->Series[7]->Points->Clear();
+	chart->Series[2]->Points->Clear();
+	chart->Series[3]->Points->Clear();
 
 }
 
@@ -65,10 +72,11 @@ void kurs1::MyForm::DefaultParams()
 	a = -10;
 	b = 10;
 	h1 = 0.01;
+	h2 = 0.01;
 	textBox1->Text = a.ToString();
 	textBox2->Text = b.ToString();
 	textBox3->Text = h1.ToString();
-
+	textBox4->Text = h2.ToString();
 
 }
 
@@ -80,12 +88,14 @@ void kurs1::MyForm::DrawAxes() {
 	this->chart->ChartAreas[0]->AxisX->LineDashStyle = System::Windows::Forms::DataVisualization::Charting::ChartDashStyle::Solid;
 	this->chart->ChartAreas[0]->AxisX->Crossing = 0; // Проходит через начало координат
 	this->chart->ChartAreas[0]->AxisX->LineWidth = 2;
+	this->chart->ChartAreas[0]->AxisX->Interval = 1;
 
 	// Рисуем ось Y
 	this->chart->ChartAreas[0]->AxisY->MajorGrid->LineColor = System::Drawing::Color::Black;
 	this->chart->ChartAreas[0]->AxisY->LineDashStyle = System::Windows::Forms::DataVisualization::Charting::ChartDashStyle::Solid;
 	this->chart->ChartAreas[0]->AxisY->Crossing = 0; // Проходит через начало координат
 	this->chart->ChartAreas[0]->AxisY->LineWidth = 2;
+	this->chart->ChartAreas[0]->AxisY->Interval = 1;
 }
 
 
@@ -105,7 +115,7 @@ char* ConvertStringToCharArray(System::String^ str) {
 void kurs1::MyForm::BuildFirstGraph()
 {
 
-	if (textBox1->Text == "" || textBox2->Text == "" || textBox3->Text == "") {
+	if (textBox1->Text == "" || textBox2->Text == "" || textBox3->Text == "" || textBox4->Text == "") {
 		MessageBox::Show("Параметры по умолчанию!", "Внимание!");
 		DefaultParams();
 	}
@@ -113,6 +123,7 @@ void kurs1::MyForm::BuildFirstGraph()
 		a = Convert::ToDouble(textBox1->Text);
 		b = Convert::ToDouble(textBox2->Text);
 		h1 = Convert::ToDouble(textBox3->Text);
+		h2 = Convert::ToDouble(textBox4->Text);
 	}
 	x1 = a;
 	Solver sol1;
@@ -132,7 +143,7 @@ void kurs1::MyForm::BuildFirstGraph()
 		else {
 			this->chart->Series[0]->Points->AddXY(x1, Double::NaN);
 		}
-		x1 += 0.01;
+		x1 += h2;
 		//y1 = sol1.Solve(x1);
 		//this->chart->Series[0]->Points->AddXY(x1, y1);
 		//x1 += 0.01;
@@ -144,7 +155,7 @@ void kurs1::MyForm::BuildFirstGraph()
 void kurs1::MyForm::BuildSecondGraph()
 {
 
-	if (textBox1->Text == "" || textBox2->Text == "" || textBox3->Text == "") {
+	if (textBox1->Text == "" || textBox2->Text == "" || textBox3->Text == "" || textBox4->Text == "") {
 		MessageBox::Show("Параметры по умолчанию!", "Внимание!");
 		DefaultParams();
 	}
@@ -152,6 +163,7 @@ void kurs1::MyForm::BuildSecondGraph()
 		a = Convert::ToDouble(textBox1->Text);
 		b = Convert::ToDouble(textBox2->Text);
 		h1 = Convert::ToDouble(textBox3->Text);
+		h2 = Convert::ToDouble(textBox4->Text);
 	}
 	x2 = a;
 	Solver sol1;
@@ -168,7 +180,7 @@ void kurs1::MyForm::BuildSecondGraph()
 			else {
 				this->chart->Series[1]->Points->AddXY(x2, Double::NaN);
 			}
-			x2 += 0.01;
+			x2 += h2;
 			//y1 = sol1.Solve(x1);
 			//this->chart->Series[0]->Points->AddXY(x1, y1);
 			//x1 += 0.01;
@@ -181,9 +193,15 @@ void kurs1::MyForm::BuildSecondGraph()
 
 void kurs1::MyForm::BuildTwoGraphs()
 {
-	if (textBox1->Text == "" || textBox2->Text == "" || textBox3->Text == "") {
+	if (textBox1->Text == "" || textBox2->Text == "" || textBox3->Text == "" || textBox4->Text == "") {
 		MessageBox::Show("Параметры по умолчанию!", "Внимание!");
 		DefaultParams();
+	}
+	else {
+		a = Convert::ToDouble(textBox1->Text);
+		b = Convert::ToDouble(textBox2->Text);
+		h1 = Convert::ToDouble(textBox3->Text);
+		h2 = Convert::ToDouble(textBox4->Text);
 	}
 	x1 = a;
 	x2 = x1;
@@ -203,7 +221,7 @@ void kurs1::MyForm::BuildTwoGraphs()
 			else {
 				this->chart->Series[0]->Points->AddXY(x1, Double::NaN);
 			}
-			x1 += 0.01;
+			x1 += h2;
 			//y1 = sol1.Solve(x1);
 			//this->chart->Series[0]->Points->AddXY(x1, y1);
 			//x1 += 0.01;
@@ -222,7 +240,7 @@ void kurs1::MyForm::BuildTwoGraphs()
 			else {
 				this->chart->Series[1]->Points->AddXY(x2, Double::NaN);
 			}
-			x2 += 0.01;
+			x2 += h2;
 			//y1 = sol1.Solve(x1);
 			//this->chart->Series[0]->Points->AddXY(x1, y1);
 			//x1 += 0.01;
@@ -247,7 +265,6 @@ System::Void kurs1::MyForm::radioButton3_CheckedChanged(System::Object^ sender, 
 	this->chart->ChartAreas[0]->AxisY->Minimum = -10; // Минимальное значение Y
 	this->chart->ChartAreas[0]->AxisY->Maximum = 10;  // Максимальное значение Y
 	this->chart->ChartAreas[0]->AxisY->Interval = 0.5; // Интервал между делениями оси Y
-	// Постройте первый график
 	if (radioButton3->Checked) {
 		if (textBoxFunction1->Text == "") {
 			MessageBox::Show("Функция отсутствует", "Внимание!");
@@ -256,6 +273,7 @@ System::Void kurs1::MyForm::radioButton3_CheckedChanged(System::Object^ sender, 
 		}
 		BuildFirstGraph();
 	}
+
 }
 
 System::Void kurs1::MyForm::radioButton4_CheckedChanged(System::Object^ sender, System::EventArgs^ e)
@@ -434,19 +452,6 @@ List<DataPoint^>^ kurs1::MyForm::FindMinima(List<DataPoint^>^ points) {
 		}
 	    return minimaPoints;
 	}
-	/*List<DataPoint^>^ minimaPoints = gcnew List<DataPoint^>();*/
-
-	//for (int i = 1; i < points->Count - 1; ++i) {
-	//	double derivative1 = CalculateDerivative(points[i - 1], points[i]);
-	//	double derivative2 = CalculateDerivative(points[i], points[i + 1]);
-
-	//	// Проверка на изменение направления производной (минимум)
-	//	if (derivative1 > 0 && derivative2 < 0) {
-	//		minimaPoints->Add(points[i]);
-	//	}
-	//}
-
-	//return minimaPoints;
 }
 
 List<DataPoint^>^ kurs1::MyForm::FindMaxima(List<DataPoint^>^ points) {
@@ -498,19 +503,6 @@ List<DataPoint^>^ kurs1::MyForm::FindMaxima(List<DataPoint^>^ points) {
 		}
 		return maximaPoints;
 	}
-	//List<DataPoint^>^ maximaPoints = gcnew List<DataPoint^>();
-
-	//for (int i = 1; i < points->Count - 1; ++i) {
-	//	double derivative1 = CalculateDerivative(points[i - 1], points[i]);
-	//	double derivative2 = CalculateDerivative(points[i], points[i + 1]);
-
-	//	// Проверка на изменение направления производной (максимум)
-	//	if (derivative1 < 0 && derivative2 > 0) {
-	//		maximaPoints->Add(points[i]);
-	//	}
-	//}
-
-	//return maximaPoints;
 }
 
 void kurs1::MyForm::checkBox_minmax1_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
@@ -540,8 +532,12 @@ void kurs1::MyForm::checkBox_minmax1_CheckedChanged(System::Object^ sender, Syst
 		}
 	}
 	else {
+		chart->Series[2]->Points->Clear();
+		chart->Series[3]->Points->Clear();
 		chart->Series[4]->Points->Clear();
 		chart->Series[5]->Points->Clear();
+		chart->Series[6]->Points->Clear();
+		chart->Series[7]->Points->Clear();
 	}
 }
 
@@ -574,8 +570,12 @@ System::Void kurs1::MyForm::checkBox_minmax2_CheckedChanged(System::Object^ send
 		}
 	}
 	else {
+		chart->Series[2]->Points->Clear();
+		chart->Series[3]->Points->Clear();
 		chart->Series[4]->Points->Clear();
 		chart->Series[5]->Points->Clear();
+		chart->Series[6]->Points->Clear();
+		chart->Series[7]->Points->Clear();
 	}
 }
 
@@ -590,7 +590,7 @@ List<DataPoint^>^ kurs1::MyForm::FindGlobalMinima(List<DataPoint^>^ Points) {
 		}
 		int count = 0;
 		double minimum = DBL_MAX;
-		for (double i = a; i <= b; i += h1) {
+		for (double i = a; i <= b; i += h2) {
 			double y = sol.Solve(i);
 			if (sol.Solve(i) <= minimum) {
 				if (sol.Solve(i) < minimum) {
@@ -613,10 +613,8 @@ List<DataPoint^>^ kurs1::MyForm::FindGlobalMinima(List<DataPoint^>^ Points) {
 		}
 		double minimum = DBL_MAX;
 		int count = 0;
-		for (double i = a; i <= b; i += h1) {
+		for (double i = a; i <= b; i += h2) {
 			double y = sol.Solve(i);
-			bool pred = sol.Solve(i - h1) > y;
-			bool now = sol.Solve(i + h1) > y;
 			if (sol.Solve(i) <= minimum) {
 				if (sol.Solve(i) < minimum) {
 					minimum = sol.Solve(i);
@@ -641,11 +639,8 @@ List<DataPoint^>^ kurs1::MyForm::FindGlobalMaxima(List<DataPoint^>^ Points) {
 		}
 		int count = 0;
 		double maximum = -DBL_MAX;
-		for (double i = a; i <= b; i += h1) {
+		for (double i = a; i <= b; i += h2) {
 			double y = sol.Solve(i);
-			bool pred = sol.Solve(i - h1) < y;
-			bool now = sol.Solve(i + h1) < y;
-
 			if (sol.Solve(i) >= maximum) {
 				if (sol.Solve(i) > maximum) {
 					maximum = sol.Solve(i);
@@ -667,12 +662,10 @@ List<DataPoint^>^ kurs1::MyForm::FindGlobalMaxima(List<DataPoint^>^ Points) {
 		}
 		int count = 0;
 		double maximum = -DBL_MAX;
-		for (double i = a; i <= b; i += h1) {
+		for (double i = a; i <= b; i += h2) {
 			double y = sol.Solve(i);
-			bool pred = sol.Solve(i - h1) < y;
-			bool now = sol.Solve(i + h1) < y;
 			if (sol.Solve(i) >= maximum) {
-				if (sol.Solve(i) > maximum) {
+				if (sol.Solve(i) > maximum ) {
 					maximum = sol.Solve(i);
 					maximaPoints->Clear();
 				}
@@ -723,6 +716,12 @@ void kurs1::MyForm::checkBox_globminmax1_CheckedChanged(System::Object^ sender, 
 		List<DataPoint^>^ maxima = FindGlobalMaxima(allPoints);
 		HighlightPoints(minima, System::Drawing::Color::Transparent);
 		HighlightPoints(maxima, System::Drawing::Color::Transparent);
+		chart->Series[2]->Points->Clear();
+		chart->Series[3]->Points->Clear();
+		chart->Series[4]->Points->Clear();
+		chart->Series[5]->Points->Clear();
+		chart->Series[6]->Points->Clear();
+		chart->Series[7]->Points->Clear();
 	}
 }
 
@@ -761,6 +760,12 @@ void kurs1::MyForm::checkBox_globminmax2_CheckedChanged(System::Object^ sender, 
 		List<DataPoint^>^ maxima = FindGlobalMaxima(allPoints);
 		HighlightPoints(minima, System::Drawing::Color::Transparent);
 		HighlightPoints(maxima, System::Drawing::Color::Transparent);
+		chart->Series[2]->Points->Clear();
+		chart->Series[3]->Points->Clear();
+		chart->Series[4]->Points->Clear();
+		chart->Series[5]->Points->Clear();
+		chart->Series[6]->Points->Clear();
+		chart->Series[7]->Points->Clear();
 	}
 }
 
@@ -826,7 +831,7 @@ void kurs1::MyForm::ShowIntersectionMessage(List<DataPoint^>^ intersectionPoints
 
 
 System::Void kurs1::MyForm::checkBox_searchCross_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
-	if (checkBox_searchCross->Checked) {
+	if (checkBox_searchCross->Checked && isGraph1Built && isGraph2Built) {
 		Series^ series1 = chart->Series[0];
 		Series^ series2 = chart->Series[1];
 
@@ -840,6 +845,11 @@ System::Void kurs1::MyForm::checkBox_searchCross_CheckedChanged(System::Object^ 
 	else {
 		// Убираем подсветку при отключении опции
 		chart->Series[2]->Points->Clear();
+		chart->Series[3]->Points->Clear();
+		chart->Series[4]->Points->Clear();
+		chart->Series[5]->Points->Clear();
+		chart->Series[6]->Points->Clear();
+		chart->Series[7]->Points->Clear();
 	}
 }
 
@@ -864,14 +874,14 @@ System::Void kurs1::MyForm::chart_MouseMove(System::Object^ sender, System::Wind
 					// Установка размера 
 					double highlightSize = 0.1;
 
-					// Если курсор близко к точке, подсветите ее
+					// Если курсор близко к точке, то ее надо подсветить
 					if (distance < highlightSize) {
 						point->MarkerStyle = System::Windows::Forms::DataVisualization::Charting::MarkerStyle::Circle;
 						point->MarkerSize = 10;
 						point->MarkerColor = System::Drawing::Color::Red;
 					}
 					else {
-						// Если курсор не близко к точке, верните обычный стиль
+						// Если курсор не близко к точке, то нужно вернуть обычный стиль
 						point->MarkerStyle = System::Windows::Forms::DataVisualization::Charting::MarkerStyle::None;
 						point->MarkerColor = System::Drawing::Color::Transparent;
 					}
@@ -933,18 +943,6 @@ System::Void kurs1::MyForm::buttonPanRight_Click(System::Object^ sender, System:
 	chart->ChartAreas[0]->AxisX->Minimum += 1.0;
 	chart->ChartAreas[0]->AxisX->Maximum += 1.0;
 	return System::Void();
-}
-
-System::Void kurs1::MyForm::buttonZoomIn_Click(System::Object^ sender, System::EventArgs^ e)
-{
-	chart->ChartAreas[0]->AxisX->ScaleView->Zoom(2, this->chart->ChartAreas[0]->AxisX->Minimum);
-	chart->ChartAreas[0]->AxisY->ScaleView->Zoom(2, this->chart->ChartAreas[0]->AxisY->Minimum);
-}
-
-System::Void kurs1::MyForm::buttonZoomOut_Click(System::Object^ sender, System::EventArgs^ e)
-{
-	chart->ChartAreas[0]->AxisX->ScaleView->Zoom(0.5, chart->ChartAreas[0]->AxisX->Minimum);
-	chart->ChartAreas[0]->AxisY->ScaleView->Zoom(0.5, chart->ChartAreas[0]->AxisY->Minimum);
 }
 
 
