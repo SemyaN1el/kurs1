@@ -50,9 +50,7 @@ System::Void kurs1::MyForm::buttonResetCheckbox_Click(System::Object^ sender, Sy
 	chart->Series[7]->Points->Clear();
 	chart->Series[2]->Points->Clear();
 	chart->Series[3]->Points->Clear();
-
 }
-
 
 
 
@@ -135,7 +133,7 @@ void kurs1::MyForm::BuildFirstGraph()
 	while (x1 <= b) {
 		double derivative = (sol1.Solve(x1 + h1) - sol1.Solve(x1 - h1)) / (2 * h1);
 	/*	if (!std::isnan(derivative) || !std::isinf(derivative)) {*/
-		if (abs(derivative) < 90){
+		if (abs(derivative) < 10000){
 			y1 = sol1.Solve(x1);
 			this->chart->Series[0]->Points->AddXY(x1, y1);
 			//x1 += 0.01;
@@ -172,7 +170,7 @@ void kurs1::MyForm::BuildSecondGraph()
 		while (x2 <= b) {
 			double derivative = (sol1.Solve(x2 + h1) - sol1.Solve(x2 - h1)) / (2 * h1);
 			/*	if (!std::isnan(derivative) || !std::isinf(derivative)) {*/
-			if (abs(derivative) < 90) {
+			if (abs(derivative) < 10000){
 				y2 = sol1.Solve(x2);
 				this->chart->Series[1]->Points->AddXY(x2, y2);
 				//x1 += 0.01;
@@ -213,7 +211,7 @@ void kurs1::MyForm::BuildTwoGraphs()
 		while (x1 <= b) {
 			double derivative = (sol1.Solve(x1 + h1) - sol1.Solve(x1 - h1)) / (2 * h1);
 			/*	if (!std::isnan(derivative) || !std::isinf(derivative)) {*/
-			if (abs(derivative) < 90) {
+			if (abs(derivative) < 10000) {
 				y1 = sol1.Solve(x1);
 				this->chart->Series[0]->Points->AddXY(x1, y1);
 				//x1 += 0.01;
@@ -321,48 +319,7 @@ System::Void kurs1::MyForm::radioButton5_CheckedChanged(System::Object^ sender, 
 
 
 
-void kurs1::MyForm::HighlightMinMaxPoints() {
-	if (isGraph1Built || isGraph2Built) {
-		// Списки для хранения минимумов и максимумов
-		List<DataPoint^>^ minPoints = gcnew List<DataPoint^>();
-		List<DataPoint^>^ maxPoints = gcnew List<DataPoint^>();
 
-		// Минимальное и максимальное значение Y на графике
-		double minY = std::numeric_limits<double>::infinity();
-		double maxY = -std::numeric_limits<double>::infinity();
-
-		// Поиск минимумов и максимумов по всем сериям графика
-		for each (Series ^ series in chart->Series) {
-			for each (DataPoint ^ point in series->Points) {
-				double yValue = point->YValues[0];
-
-				// Проверка на минимум
-				if (yValue < minY) {
-					minY = yValue;
-					minPoints->Clear();
-					minPoints->Add(point);
-				}
-				else if (yValue == minY) {
-					minPoints->Add(point);
-				}
-
-				// Проверка на максимум
-				if (yValue > maxY) {
-					maxY = yValue;
-					maxPoints->Clear();
-					maxPoints->Add(point);
-				}
-				else if (yValue == maxY) {
-					maxPoints->Add(point);
-				}
-			}
-		}
-
-		// Подсветка минимумов и максимумов
-		HighlightPoints(minPoints, System::Drawing::Color::Blue);
-		HighlightPoints(maxPoints, System::Drawing::Color::Green);
-	}
-}
 
 
 void kurs1::MyForm::HighlightPoints(List<DataPoint^>^ points, System::Drawing::Color color) {
@@ -580,6 +537,9 @@ System::Void kurs1::MyForm::checkBox_minmax2_CheckedChanged(System::Object^ send
 }
 
 
+
+
+
 List<DataPoint^>^ kurs1::MyForm::FindGlobalMinima(List<DataPoint^>^ Points) {
 	if (isGraph1Built) {
 		List<DataPoint^>^ minimaPoints = gcnew List<DataPoint^>();
@@ -590,19 +550,37 @@ List<DataPoint^>^ kurs1::MyForm::FindGlobalMinima(List<DataPoint^>^ Points) {
 		}
 		int count = 0;
 		double minimum = DBL_MAX;
+		Series^ series1 = chart->Series[0];
+
+		for each (DataPoint ^ point in series1->Points) {
+			double yValue = point->YValues[0];
+			if (yValue < minimum) {
+				minimum = yValue;
+			}
+		}
 		for (double i = a; i <= b; i += h2) {
 			double y = sol.Solve(i);
-			if (sol.Solve(i) <= minimum) {
-				if (sol.Solve(i) < minimum) {
-					minimum = sol.Solve(i);
-					minimaPoints->Clear();
-				}
+			if (sol.Solve(i) == minimum) {
 				chart->Series[6]->Points->AddXY(i, sol.Solve(i));
 				minimaPoints->Add(chart->Series[6]->Points[count]);
 				count++;
 			}
 		}
+
 		return minimaPoints;
+		//for (double i = a; i <= b; i += h2) {
+		//	double y = sol.Solve(i);
+		//	if (sol.Solve(i) <= minimum) {
+		//		if (sol.Solve(i) < minimum) {
+		//			minimum = sol.Solve(i);
+		//			minimaPoints->Clear();
+		//		}
+		//		chart->Series[6]->Points->AddXY(i, sol.Solve(i));
+		//		minimaPoints->Add(chart->Series[6]->Points[count]);
+		//		count++;
+		//	}
+		//}
+		//return minimaPoints;
 	}
 	else if (isGraph2Built) {
 		List<DataPoint^>^ minimaPoints = gcnew List<DataPoint^>();
@@ -611,22 +589,28 @@ List<DataPoint^>^ kurs1::MyForm::FindGlobalMinima(List<DataPoint^>^ Points) {
 		if (!sol.Load(expression)) {
 			return nullptr;
 		}
-		double minimum = DBL_MAX;
 		int count = 0;
+		double minimum = DBL_MAX;
+		Series^ series1 = chart->Series[0];
+
+		for each (DataPoint ^ point in series1->Points) {
+			double yValue = point->YValues[0];
+			if (yValue < minimum) {
+				minimum = yValue;
+			}
+		}
 		for (double i = a; i <= b; i += h2) {
 			double y = sol.Solve(i);
-			if (sol.Solve(i) <= minimum) {
-				if (sol.Solve(i) < minimum) {
-					minimum = sol.Solve(i);
-					minimaPoints->Clear();
-				}
+			if (sol.Solve(i) == minimum) {
 				chart->Series[6]->Points->AddXY(i, sol.Solve(i));
 				minimaPoints->Add(chart->Series[6]->Points[count]);
 				count++;
 			}
 		}
+
 		return minimaPoints;
 	}
+
 }
 
 List<DataPoint^>^ kurs1::MyForm::FindGlobalMaxima(List<DataPoint^>^ Points) {
@@ -639,41 +623,64 @@ List<DataPoint^>^ kurs1::MyForm::FindGlobalMaxima(List<DataPoint^>^ Points) {
 		}
 		int count = 0;
 		double maximum = -DBL_MAX;
+		Series^ series1 = chart->Series[0];
+
+		for each (DataPoint ^ point in series1->Points) {
+			double yValue = point->YValues[0];
+			if (yValue > maximum) {
+				maximum = yValue;
+			}
+		}
 		for (double i = a; i <= b; i += h2) {
 			double y = sol.Solve(i);
-			if (sol.Solve(i) >= maximum) {
-				if (sol.Solve(i) > maximum) {
-					maximum = sol.Solve(i);
-					maximaPoints->Clear();
-				}
+			if (sol.Solve(i) == maximum) {
 				chart->Series[7]->Points->AddXY(i, sol.Solve(i));
 				maximaPoints->Add(chart->Series[7]->Points[count]);
 				count++;
 			}
 		}
+
 		return maximaPoints;
+		//for (double i = a; i <= b; i += h2) {
+		//	double y = sol.Solve(i);
+		//	if (sol.Solve(i) >= maximum) {
+		//		if (sol.Solve(i) > maximum) {
+		//			maximum = sol.Solve(i);
+		//			maximaPoints->Clear();
+		//		}
+		//		chart->Series[7]->Points->AddXY(i, sol.Solve(i));
+		//		maximaPoints->Add(chart->Series[7]->Points[count]);
+		//		count++;
+		//	}
+		//}
+		//return maximaPoints;
 	}
 	else if (isGraph2Built) {
 		List<DataPoint^>^ maximaPoints = gcnew List<DataPoint^>();
 		Solver sol;
-		char* expression = ConvertStringToCharArray(textBoxFunction2->Text);
+		char* expression = ConvertStringToCharArray(textBoxFunction1->Text);
 		if (!sol.Load(expression)) {
 			return nullptr;
 		}
 		int count = 0;
 		double maximum = -DBL_MAX;
+		Series^ series1 = chart->Series[0];
+
+		for each (DataPoint ^ point in series1->Points) {
+			double yValue = point->YValues[0];
+			if (yValue > maximum) {
+				maximum = yValue;
+			}
+		}
 		for (double i = a; i <= b; i += h2) {
 			double y = sol.Solve(i);
-			if (sol.Solve(i) >= maximum) {
-				if (sol.Solve(i) > maximum ) {
-					maximum = sol.Solve(i);
-					maximaPoints->Clear();
-				}
+			if (sol.Solve(i) == maximum) {
 				chart->Series[7]->Points->AddXY(i, sol.Solve(i));
 				maximaPoints->Add(chart->Series[7]->Points[count]);
 				count++;
 			}
 		}
+
 		return maximaPoints;
 	}
 }
@@ -722,6 +729,7 @@ void kurs1::MyForm::checkBox_globminmax1_CheckedChanged(System::Object^ sender, 
 		chart->Series[5]->Points->Clear();
 		chart->Series[6]->Points->Clear();
 		chart->Series[7]->Points->Clear();
+
 	}
 }
 
@@ -831,16 +839,22 @@ void kurs1::MyForm::ShowIntersectionMessage(List<DataPoint^>^ intersectionPoints
 
 
 System::Void kurs1::MyForm::checkBox_searchCross_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
-	if (checkBox_searchCross->Checked && isGraph1Built && isGraph2Built) {
-		Series^ series1 = chart->Series[0];
-		Series^ series2 = chart->Series[1];
+	if (checkBox_searchCross->Checked) {
+		if (isGraph1Built && isGraph2Built) {
+			Series^ series1 = chart->Series[0];
+			Series^ series2 = chart->Series[1];
 
-		// Находим точки пересечения
-		List<DataPoint^>^ intersectPoints = FindIntersectionPoints(series1, series2, 0.01); 
+			// Находим точки пересечения
+			List<DataPoint^>^ intersectPoints = FindIntersectionPoints(series1, series2, 0.01);
 
-		// Подсветка точек пересечения
-		HighlightIntersectionPoints(intersectPoints, System::Drawing::Color::Green);
-		ShowIntersectionMessage(intersectPoints);
+			// Подсветка точек пересечения
+			HighlightIntersectionPoints(intersectPoints, System::Drawing::Color::Green);
+			ShowIntersectionMessage(intersectPoints);
+		}
+		else {
+			MessageBox::Show("Один из графиков не построен", "Внимание!");
+			checkBox_searchCross->Checked = false;
+		}
 	}
 	else {
 		// Убираем подсветку при отключении опции

@@ -38,6 +38,7 @@ namespace kurs1 {
 	protected:
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::Label^ label3;
+	private: System::Windows::Forms::Label^ label4;
 
 	private:
 		/// <summary>
@@ -56,6 +57,7 @@ namespace kurs1 {
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// label1
@@ -91,11 +93,24 @@ namespace kurs1 {
 			this->label3->TabIndex = 2;
 			this->label3->Text = resources->GetString(L"label3.Text");
 			// 
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei UI", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->label4->Location = System::Drawing::Point(12, 300);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(634, 38);
+			this->label4->TabIndex = 3;
+			this->label4->Text = L"Если какой-то из параметров не введен, то все параметры сбрасываются к значениями"
+				L" \r\nпо умолчанию";
+			// 
 			// Instruction
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(692, 447);
+			this->Controls->Add(this->label4);
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);

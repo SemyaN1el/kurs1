@@ -102,42 +102,23 @@ namespace kurs1 {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			System::Windows::Forms::DataVisualization::Charting::ChartArea^ chartArea2 = 
-				(gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
-			System::Windows::Forms::DataVisualization::Charting::Legend^ legend2 = 
-				(gcnew System::Windows::Forms::DataVisualization::Charting::Legend());
-			System::Windows::Forms::DataVisualization::Charting::Series^ series9 = 
-				(gcnew System::Windows::Forms::DataVisualization::Charting::Series());
-			System::Windows::Forms::DataVisualization::Charting::Series^ series10 = 
-				(gcnew System::Windows::Forms::DataVisualization::Charting::Series());
-			System::Windows::Forms::DataVisualization::Charting::Series^ series11 = 
-				(gcnew System::Windows::Forms::DataVisualization::Charting::Series());
-			System::Windows::Forms::DataVisualization::Charting::Series^ series12 = 
-				(gcnew System::Windows::Forms::DataVisualization::Charting::Series());
-			System::Windows::Forms::DataVisualization::Charting::Series^ series13 = 
-				(gcnew System::Windows::Forms::DataVisualization::Charting::Series());
-			System::Windows::Forms::DataVisualization::Charting::Series^ series14 = 
-				(gcnew System::Windows::Forms::DataVisualization::Charting::Series());
-			System::Windows::Forms::DataVisualization::Charting::Series^ series15 = 
-				(gcnew System::Windows::Forms::DataVisualization::Charting::Series());
-			System::Windows::Forms::DataVisualization::Charting::Series^ series16 = 
-				(gcnew System::Windows::Forms::DataVisualization::
-					Charting::Series());
-			System::Windows::Forms::DataVisualization::Charting::
-				Title^ title2 = 
-				(gcnew System::Windows::Forms::DataVisualization::
-					Charting::Title());
-			this->chart = (gcnew System::Windows::Forms::DataVisualization::
-				Charting::Chart());
+			System::Windows::Forms::DataVisualization::Charting::ChartArea^ chartArea1 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
+			System::Windows::Forms::DataVisualization::Charting::Legend^ legend1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Legend());
+			System::Windows::Forms::DataVisualization::Charting::Series^ series1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::Series^ series2 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::Series^ series3 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::Series^ series4 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::Series^ series5 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::Series^ series6 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::Series^ series7 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::Series^ series8 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::Title^ title1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Title());
+			this->chart = (gcnew System::Windows::Forms::DataVisualization::Charting::Chart());
 			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
-			this->ìåíþToolStripMenuItem = 
-				(gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->ïîñòðîèòüÃðàôèêToolStripMenuItem = 
-				(gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->î÷èñòèòüÃðàôèêToolStripMenuItem = 
-				(gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->âûõîäToolStripMenuItem = 
-				(gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->ìåíþToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->ïîñòðîèòüÃðàôèêToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->î÷èñòèòüÃðàôèêToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->âûõîäToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
 			this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
 			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
@@ -171,8 +152,7 @@ namespace kurs1 {
 			this->radioButton4 = (gcnew System::Windows::Forms::RadioButton());
 			this->radioButton3 = (gcnew System::Windows::Forms::RadioButton());
 			this->menuStrip2 = (gcnew System::Windows::Forms::MenuStrip());
-			this->ñïðàâî÷íàÿÈíôîðìàöèÿToolStripMenuItem = (gcnew System::Windows::
-				Forms::ToolStripMenuItem());
+			this->ñïðàâî÷íàÿÈíôîðìàöèÿToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->âûõîäToolStripMenuItem1 = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->chart))->BeginInit();
 			this->groupBox1->SuspendLayout();
@@ -183,101 +163,83 @@ namespace kurs1 {
 			// 
 			// chart
 			// 
-			chartArea2->AxisX->ArrowStyle = System::Windows::Forms::DataVisualization::
-				Charting::AxisArrowStyle::Triangle;
-			chartArea2->AxisX->IntervalAutoMode = System::Windows::Forms::DataVisualization::
-				Charting::IntervalAutoMode::VariableCount;
-			chartArea2->AxisX->ScrollBar->ButtonStyle = System::Windows::Forms::
-				DataVisualization::Charting::ScrollBarButtonStyles::ResetZoom;
-			chartArea2->AxisX->Title = L"Îñü X";
-			chartArea2->AxisY->ArrowStyle = System::Windows::Forms::DataVisualization::
-				Charting::AxisArrowStyle::Triangle;
-			chartArea2->AxisY->IntervalAutoMode = System::Windows::Forms::DataVisualization::
-				Charting::IntervalAutoMode::VariableCount;
-			chartArea2->AxisY->IsMarksNextToAxis = false;
-			chartArea2->AxisY->Title = L"Îñü Y";
-			chartArea2->CursorX->IsUserEnabled = true;
-			chartArea2->CursorX->IsUserSelectionEnabled = true;
-			chartArea2->CursorY->IsUserEnabled = true;
-			chartArea2->CursorY->IsUserSelectionEnabled = true;
-			chartArea2->Name = L"ChartArea1";
-			this->chart->ChartAreas->Add(chartArea2);
-			legend2->Name = L"Legend1";
-			legend2->Title = L"Öâåòà ãðàôèêîâ";
-			legend2->TitleSeparator = System::Windows::Forms::DataVisualization::
-				Charting::LegendSeparatorStyle::Line;
-			this->chart->Legends->Add(legend2);
+			chartArea1->AxisX->ArrowStyle = System::Windows::Forms::DataVisualization::Charting::AxisArrowStyle::Triangle;
+			chartArea1->AxisX->IntervalAutoMode = System::Windows::Forms::DataVisualization::Charting::IntervalAutoMode::VariableCount;
+			chartArea1->AxisX->ScrollBar->ButtonStyle = System::Windows::Forms::DataVisualization::Charting::ScrollBarButtonStyles::ResetZoom;
+			chartArea1->AxisX->Title = L"Îñü X";
+			chartArea1->AxisY->ArrowStyle = System::Windows::Forms::DataVisualization::Charting::AxisArrowStyle::Triangle;
+			chartArea1->AxisY->IntervalAutoMode = System::Windows::Forms::DataVisualization::Charting::IntervalAutoMode::VariableCount;
+			chartArea1->AxisY->IsMarksNextToAxis = false;
+			chartArea1->AxisY->Title = L"Îñü Y";
+			chartArea1->CursorX->IsUserEnabled = true;
+			chartArea1->CursorX->IsUserSelectionEnabled = true;
+			chartArea1->CursorY->IsUserEnabled = true;
+			chartArea1->CursorY->IsUserSelectionEnabled = true;
+			chartArea1->Name = L"ChartArea1";
+			this->chart->ChartAreas->Add(chartArea1);
+			legend1->Name = L"Legend1";
+			legend1->Title = L"Öâåòà ãðàôèêîâ";
+			legend1->TitleSeparator = System::Windows::Forms::DataVisualization::Charting::LegendSeparatorStyle::Line;
+			this->chart->Legends->Add(legend1);
 			this->chart->Location = System::Drawing::Point(6, 13);
 			this->chart->Name = L"chart";
-			series9->BorderWidth = 3;
-			series9->ChartArea = L"ChartArea1";
-			series9->ChartType = System::Windows::Forms::DataVisualization::Charting::
-				SeriesChartType::Spline;
-			series9->Color = System::Drawing::Color::FromArgb(static_cast<System::Int32>
-				(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(0)),
+			series1->BorderWidth = 3;
+			series1->ChartArea = L"ChartArea1";
+			series1->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Spline;
+			series1->Color = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(0)),
 				static_cast<System::Int32>(static_cast<System::Byte>(192)));
-			series9->Legend = L"Legend1";
-			series9->LegendText = L"Ãðàôèê 1";
-			series9->Name = L"Series1";
-			series10->BorderWidth = 3;
-			series10->ChartArea = L"ChartArea1";
-			series10->ChartType = System::Windows::Forms::DataVisualization::
-				Charting::SeriesChartType::Spline;
-			series10->Color = System::Drawing::Color::Red;
-			series10->Legend = L"Legend1";
-			series10->LegendText = L"Ãðàôèê 2";
-			series10->Name = L"Series2";
-			series11->ChartArea = L"ChartArea1";
-			series11->ChartType = System::Windows::Forms::DataVisualization::
-				Charting::SeriesChartType::Point;
-			series11->Legend = L"Legend1";
-			series11->Name = L"Òî÷êè ïåðåñå÷åíèÿ";
-			series11->YValuesPerPoint = 2;
-			series12->ChartArea = L"ChartArea1";
-			series12->ChartType = System::Windows::Forms::DataVisualization::
-				Charting::SeriesChartType::Point;
-			series12->Legend = L"Legend1";
-			series12->Name = L"Òî÷êè ãëîá. ýêñòð.";
-			series13->ChartArea = L"ChartArea1";
-			series13->ChartType = System::Windows::Forms::DataVisualization::
-				Charting::SeriesChartType::Point;
-			series13->Legend = L"Legend1";
-			series13->Name = L"Òî÷êè ëîê. ìèí.";
-			series14->ChartArea = L"ChartArea1";
-			series14->ChartType = System::Windows::Forms::DataVisualization::
-				Charting::SeriesChartType::Point;
-			series14->Legend = L"Legend1";
-			series14->Name = L"Òî÷êè ëîê. ìàêñ.";
-			series15->ChartArea = L"ChartArea1";
-			series15->ChartType = System::Windows::Forms::DataVisualization::
-				Charting::SeriesChartType::Point;
-			series15->Legend = L"Legend1";
-			series15->Name = L"Òî÷êè ãëîá. ìèí.";
-			series16->ChartArea = L"ChartArea1";
-			series16->ChartType = System::Windows::Forms::DataVisualization::
-				Charting::SeriesChartType::Point;
-			series16->Legend = L"Legend1";
-			series16->Name = L"Òî÷êè ãëîá. ìàêñ.";
-			this->chart->Series->Add(series9);
-			this->chart->Series->Add(series10);
-			this->chart->Series->Add(series11);
-			this->chart->Series->Add(series12);
-			this->chart->Series->Add(series13);
-			this->chart->Series->Add(series14);
-			this->chart->Series->Add(series15);
-			this->chart->Series->Add(series16);
+			series1->Legend = L"Legend1";
+			series1->LegendText = L"Ãðàôèê 1";
+			series1->Name = L"Series1";
+			series2->BorderWidth = 3;
+			series2->ChartArea = L"ChartArea1";
+			series2->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Spline;
+			series2->Color = System::Drawing::Color::Red;
+			series2->Legend = L"Legend1";
+			series2->LegendText = L"Ãðàôèê 2";
+			series2->Name = L"Series2";
+			series3->ChartArea = L"ChartArea1";
+			series3->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Point;
+			series3->Legend = L"Legend1";
+			series3->Name = L"Òî÷êè ïåðåñå÷åíèÿ";
+			series3->YValuesPerPoint = 2;
+			series4->ChartArea = L"ChartArea1";
+			series4->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Point;
+			series4->Legend = L"Legend1";
+			series4->Name = L"Òî÷êè ãëîá. ýêñòð.";
+			series5->ChartArea = L"ChartArea1";
+			series5->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Point;
+			series5->Legend = L"Legend1";
+			series5->Name = L"Òî÷êè ëîê. ìèí.";
+			series6->ChartArea = L"ChartArea1";
+			series6->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Point;
+			series6->Legend = L"Legend1";
+			series6->Name = L"Òî÷êè ëîê. ìàêñ.";
+			series7->ChartArea = L"ChartArea1";
+			series7->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Point;
+			series7->Legend = L"Legend1";
+			series7->Name = L"Òî÷êè ãëîá. ìèí.";
+			series8->ChartArea = L"ChartArea1";
+			series8->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Point;
+			series8->Legend = L"Legend1";
+			series8->Name = L"Òî÷êè ãëîá. ìàêñ.";
+			this->chart->Series->Add(series1);
+			this->chart->Series->Add(series2);
+			this->chart->Series->Add(series3);
+			this->chart->Series->Add(series4);
+			this->chart->Series->Add(series5);
+			this->chart->Series->Add(series6);
+			this->chart->Series->Add(series7);
+			this->chart->Series->Add(series8);
 			this->chart->Size = System::Drawing::Size(727, 685);
 			this->chart->TabIndex = 4;
 			this->chart->Text = L"chart1";
-			title2->Name = L"Title1";
-			title2->Text = L"Ãðàôèê ôóíêöèé";
-			this->chart->Titles->Add(title2);
-			this->chart->MouseEnter += gcnew System::EventHandler(this, 
-				&MyForm::chart_MouseEnter);
-			this->chart->MouseLeave += gcnew System::EventHandler(this, 
-				&MyForm::chart_MouseLeave);
-			this->chart->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, 
-				&MyForm::chart_MouseMove);
+			title1->Name = L"Title1";
+			title1->Text = L"Ãðàôèê ôóíêöèé";
+			this->chart->Titles->Add(title1);
+			this->chart->MouseEnter += gcnew System::EventHandler(this, &MyForm::chart_MouseEnter);
+			this->chart->MouseLeave += gcnew System::EventHandler(this, &MyForm::chart_MouseLeave);
+			this->chart->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &MyForm::chart_MouseMove);
 			// 
 			// menuStrip1
 			// 
@@ -288,8 +250,7 @@ namespace kurs1 {
 			// 
 			// ìåíþToolStripMenuItem
 			// 
-			this->ìåíþToolStripMenuItem->DropDownItems->AddRange(
-				gcnew cli::array<System::Windows::Forms::ToolStripItem^  >(2) {
+			this->ìåíþToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
 				this->ïîñòðîèòüÃðàôèêToolStripMenuItem,
 					this->î÷èñòèòüÃðàôèêToolStripMenuItem
 			});
@@ -312,8 +273,7 @@ namespace kurs1 {
 			this->âûõîäToolStripMenuItem->Name = L"âûõîäToolStripMenuItem";
 			this->âûõîäToolStripMenuItem->Size = System::Drawing::Size(54, 20);
 			this->âûõîäToolStripMenuItem->Text = L"Âûõîä";
-			this->âûõîäToolStripMenuItem->Click += gcnew System::EventHandler(this,
-				&MyForm::âûõîäToolStripMenuItem_Click);
+			this->âûõîäToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::âûõîäToolStripMenuItem_Click);
 			// 
 			// groupBox1
 			// 
@@ -348,8 +308,7 @@ namespace kurs1 {
 			// 
 			// textBox4
 			// 
-			this->textBox4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, 
-				System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->textBox4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->textBox4->Location = System::Drawing::Point(169, 106);
 			this->textBox4->Name = L"textBox4";
@@ -359,8 +318,7 @@ namespace kurs1 {
 			// label7
 			// 
 			this->label7->AutoSize = true;
-			this->label7->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14,
-				System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->label7->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->label7->Location = System::Drawing::Point(3, 111);
 			this->label7->Name = L"label7";
@@ -378,8 +336,7 @@ namespace kurs1 {
 			// label10
 			// 
 			this->label10->AutoSize = true;
-			this->label10->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, 
-				System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->label10->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->label10->Location = System::Drawing::Point(0, 206);
 			this->label10->Name = L"label10";
@@ -390,8 +347,7 @@ namespace kurs1 {
 			// label4
 			// 
 			this->label4->AutoSize = true;
-			this->label4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F,
-				System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->label4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->label4->Location = System::Drawing::Point(0, 182);
 			this->label4->Name = L"label4";
@@ -408,8 +364,7 @@ namespace kurs1 {
 			// 
 			// textBox3
 			// 
-			this->textBox3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, 
-				System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->textBox3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->textBox3->Location = System::Drawing::Point(169, 74);
 			this->textBox3->Name = L"textBox3";
@@ -418,8 +373,7 @@ namespace kurs1 {
 			// 
 			// textBox2
 			// 
-			this->textBox2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, 
-				System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->textBox2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->textBox2->Location = System::Drawing::Point(77, 45);
 			this->textBox2->Name = L"textBox2";
@@ -428,8 +382,7 @@ namespace kurs1 {
 			// 
 			// textBox1
 			// 
-			this->textBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, 
-				System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->textBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->textBox1->Location = System::Drawing::Point(77, 16);
 			this->textBox1->Name = L"textBox1";
@@ -439,8 +392,7 @@ namespace kurs1 {
 			// label3
 			// 
 			this->label3->AutoSize = true;
-			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, 
-				System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->label3->Location = System::Drawing::Point(3, 77);
 			this->label3->Name = L"label3";
@@ -451,8 +403,7 @@ namespace kurs1 {
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, 
-				System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->label2->Location = System::Drawing::Point(3, 48);
 			this->label2->Name = L"label2";
@@ -463,8 +414,7 @@ namespace kurs1 {
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, 
-				System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->label1->Location = System::Drawing::Point(3, 16);
 			this->label1->Name = L"label1";
@@ -507,8 +457,7 @@ namespace kurs1 {
 			this->checkBox_globminmax2->TabIndex = 36;
 			this->checkBox_globminmax2->Text = L"Íàéòè ãëîáàëüíûå  ýêñòðåìóìû ôóíêöèè 2";
 			this->checkBox_globminmax2->UseVisualStyleBackColor = true;
-			this->checkBox_globminmax2->CheckedChanged += gcnew System::EventHandler(this, 
-				&MyForm::checkBox_globminmax2_CheckedChanged);
+			this->checkBox_globminmax2->CheckedChanged += gcnew System::EventHandler(this, &MyForm::checkBox_globminmax2_CheckedChanged);
 			// 
 			// checkBox_globminmax1
 			// 
@@ -519,8 +468,7 @@ namespace kurs1 {
 			this->checkBox_globminmax1->TabIndex = 35;
 			this->checkBox_globminmax1->Text = L"Íàéòè ãëîáàëüíûå  ýêñòðåìóìû ôóíêöèè 1";
 			this->checkBox_globminmax1->UseVisualStyleBackColor = true;
-			this->checkBox_globminmax1->CheckedChanged += gcnew System::EventHandler(this, 
-				&MyForm::checkBox_globminmax1_CheckedChanged);
+			this->checkBox_globminmax1->CheckedChanged += gcnew System::EventHandler(this, &MyForm::checkBox_globminmax1_CheckedChanged);
 			// 
 			// buttonResetCheckbox
 			// 
@@ -530,8 +478,7 @@ namespace kurs1 {
 			this->buttonResetCheckbox->TabIndex = 31;
 			this->buttonResetCheckbox->Text = L"Ñáðîñ ÷åêáîêñîâ";
 			this->buttonResetCheckbox->UseVisualStyleBackColor = true;
-			this->buttonResetCheckbox->Click += gcnew System::EventHandler(this, 
-				&MyForm::buttonResetCheckbox_Click);
+			this->buttonResetCheckbox->Click += gcnew System::EventHandler(this, &MyForm::buttonResetCheckbox_Click);
 			// 
 			// buttonClear
 			// 
@@ -541,8 +488,7 @@ namespace kurs1 {
 			this->buttonClear->TabIndex = 30;
 			this->buttonClear->Text = L"Î÷èñòèòü ãðàôèêè";
 			this->buttonClear->UseVisualStyleBackColor = true;
-			this->buttonClear->Click += gcnew System::EventHandler(this, 
-				&MyForm::buttonClear_Click);
+			this->buttonClear->Click += gcnew System::EventHandler(this, &MyForm::buttonClear_Click);
 			// 
 			// buttonPanRight
 			// 
@@ -552,14 +498,12 @@ namespace kurs1 {
 			this->buttonPanRight->TabIndex = 29;
 			this->buttonPanRight->Text = L"Âïðàâî";
 			this->buttonPanRight->UseVisualStyleBackColor = true;
-			this->buttonPanRight->Click += gcnew System::EventHandler(this, 
-				&MyForm::buttonPanRight_Click);
+			this->buttonPanRight->Click += gcnew System::EventHandler(this, &MyForm::buttonPanRight_Click);
 			// 
 			// label6
 			// 
 			this->label6->AutoSize = true;
-			this->label6->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12.25F, 
-				System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->label6->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->label6->Location = System::Drawing::Point(6, 228);
 			this->label6->Name = L"label6";
@@ -575,8 +519,7 @@ namespace kurs1 {
 			this->buttonPanLeft->TabIndex = 27;
 			this->buttonPanLeft->Text = L"Âëåâî";
 			this->buttonPanLeft->UseVisualStyleBackColor = true;
-			this->buttonPanLeft->Click += gcnew System::EventHandler(this, 
-				&MyForm::buttonPanLeft_Click);
+			this->buttonPanLeft->Click += gcnew System::EventHandler(this, &MyForm::buttonPanLeft_Click);
 			// 
 			// buttonPanUp
 			// 
@@ -586,8 +529,7 @@ namespace kurs1 {
 			this->buttonPanUp->TabIndex = 26;
 			this->buttonPanUp->Text = L"Ââåðõ";
 			this->buttonPanUp->UseVisualStyleBackColor = true;
-			this->buttonPanUp->Click += gcnew System::EventHandler(this, 
-				&MyForm::buttonPanUp_Click);
+			this->buttonPanUp->Click += gcnew System::EventHandler(this, &MyForm::buttonPanUp_Click);
 			// 
 			// buttonPanDown
 			// 
@@ -597,14 +539,12 @@ namespace kurs1 {
 			this->buttonPanDown->TabIndex = 9;
 			this->buttonPanDown->Text = L"Âíèç";
 			this->buttonPanDown->UseVisualStyleBackColor = true;
-			this->buttonPanDown->Click += gcnew System::EventHandler(this, 
-				&MyForm::buttonPanDown_Click);
+			this->buttonPanDown->Click += gcnew System::EventHandler(this, &MyForm::buttonPanDown_Click);
 			// 
 			// label5
 			// 
 			this->label5->AutoSize = true;
-			this->label5->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12.25F, 
-				System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->label5->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->label5->Location = System::Drawing::Point(2, 186);
 			this->label5->Name = L"label5";
@@ -615,9 +555,8 @@ namespace kurs1 {
 			// labelCoordinates
 			// 
 			this->labelCoordinates->AutoSize = true;
-			this->labelCoordinates->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 
-			12.25F, System::Drawing::FontStyle::Regular,
-			System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
+			this->labelCoordinates->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12.25F, System::Drawing::FontStyle::Regular,
+				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
 			this->labelCoordinates->Location = System::Drawing::Point(330, 186);
 			this->labelCoordinates->Name = L"labelCoordinates";
 			this->labelCoordinates->Size = System::Drawing::Size(14, 20);
@@ -633,8 +572,7 @@ namespace kurs1 {
 			this->checkBox_minmax2->TabIndex = 24;
 			this->checkBox_minmax2->Text = L"Íàéòè ëîêàëüíûå ýêñòðåìóìû ôóíêöèè 2";
 			this->checkBox_minmax2->UseVisualStyleBackColor = true;
-			this->checkBox_minmax2->CheckedChanged += gcnew System::EventHandler(this, 
-				&MyForm::checkBox_minmax2_CheckedChanged);
+			this->checkBox_minmax2->CheckedChanged += gcnew System::EventHandler(this, &MyForm::checkBox_minmax2_CheckedChanged);
 			// 
 			// checkBox_minmax1
 			// 
@@ -645,8 +583,7 @@ namespace kurs1 {
 			this->checkBox_minmax1->TabIndex = 23;
 			this->checkBox_minmax1->Text = L"Íàéòè ëîêàëüíûå  ýêñòðåìóìû ôóíêöèè 1";
 			this->checkBox_minmax1->UseVisualStyleBackColor = true;
-			this->checkBox_minmax1->CheckedChanged += gcnew System::EventHandler(this, 
-				&MyForm::checkBox_minmax1_CheckedChanged);
+			this->checkBox_minmax1->CheckedChanged += gcnew System::EventHandler(this, &MyForm::checkBox_minmax1_CheckedChanged);
 			// 
 			// checkBox_searchCross
 			// 
@@ -657,8 +594,7 @@ namespace kurs1 {
 			this->checkBox_searchCross->TabIndex = 18;
 			this->checkBox_searchCross->Text = L"Íàéòè òî÷êè ïåðåñå÷åíèÿ äâóõ ôóíêöèé";
 			this->checkBox_searchCross->UseVisualStyleBackColor = true;
-			this->checkBox_searchCross->CheckedChanged += gcnew System::EventHandler(this, 
-				&MyForm::checkBox_searchCross_CheckedChanged);
+			this->checkBox_searchCross->CheckedChanged += gcnew System::EventHandler(this, &MyForm::checkBox_searchCross_CheckedChanged);
 			// 
 			// radioButton5
 			// 
@@ -670,8 +606,7 @@ namespace kurs1 {
 			this->radioButton5->TabStop = true;
 			this->radioButton5->Text = L"Ïîñòðîèòü 2 ãðàôèê";
 			this->radioButton5->UseVisualStyleBackColor = true;
-			this->radioButton5->CheckedChanged += gcnew System::EventHandler(this, 
-				&MyForm::radioButton5_CheckedChanged);
+			this->radioButton5->CheckedChanged += gcnew System::EventHandler(this, &MyForm::radioButton5_CheckedChanged);
 			// 
 			// radioButton4
 			// 
@@ -683,8 +618,7 @@ namespace kurs1 {
 			this->radioButton4->TabStop = true;
 			this->radioButton4->Text = L"Ïîñòðîèòü 2 ãðàôèêà";
 			this->radioButton4->UseVisualStyleBackColor = true;
-			this->radioButton4->CheckedChanged += gcnew System::EventHandler(this, 
-				&MyForm::radioButton4_CheckedChanged);
+			this->radioButton4->CheckedChanged += gcnew System::EventHandler(this, &MyForm::radioButton4_CheckedChanged);
 			// 
 			// radioButton3
 			// 
@@ -696,8 +630,7 @@ namespace kurs1 {
 			this->radioButton3->TabStop = true;
 			this->radioButton3->Text = L"Ïîñòðîèòü 1 ãðàôèê";
 			this->radioButton3->UseVisualStyleBackColor = true;
-			this->radioButton3->CheckedChanged += gcnew System::EventHandler(this, 
-				&MyForm::radioButton3_CheckedChanged);
+			this->radioButton3->CheckedChanged += gcnew System::EventHandler(this, &MyForm::radioButton3_CheckedChanged);
 			// 
 			// menuStrip2
 			// 
@@ -716,16 +649,14 @@ namespace kurs1 {
 			this->ñïðàâî÷íàÿÈíôîðìàöèÿToolStripMenuItem->Name = L"ñïðàâî÷íàÿÈíôîðìàöèÿToolStripMenuItem";
 			this->ñïðàâî÷íàÿÈíôîðìàöèÿToolStripMenuItem->Size = System::Drawing::Size(161, 20);
 			this->ñïðàâî÷íàÿÈíôîðìàöèÿToolStripMenuItem->Text = L"Ñïðàâî÷íàÿ èíôîðìàöèÿ";
-			this->ñïðàâî÷íàÿÈíôîðìàöèÿToolStripMenuItem->Click += gcnew System::EventHandler(this, 
-				&MyForm::ñïðàâî÷íàÿÈíôîðìàöèÿToolStripMenuItem_Click);
+			this->ñïðàâî÷íàÿÈíôîðìàöèÿToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::ñïðàâî÷íàÿÈíôîðìàöèÿToolStripMenuItem_Click);
 			// 
 			// âûõîäToolStripMenuItem1
 			// 
 			this->âûõîäToolStripMenuItem1->Name = L"âûõîäToolStripMenuItem1";
 			this->âûõîäToolStripMenuItem1->Size = System::Drawing::Size(54, 20);
 			this->âûõîäToolStripMenuItem1->Text = L"Âûõîä";
-			this->âûõîäToolStripMenuItem1->Click += gcnew System::EventHandler(this, 
-				&MyForm::âûõîäToolStripMenuItem_Click);
+			this->âûõîäToolStripMenuItem1->Click += gcnew System::EventHandler(this, &MyForm::âûõîäToolStripMenuItem_Click);
 			// 
 			// MyForm
 			// 
@@ -788,7 +719,6 @@ namespace kurs1 {
 	System::Void buttonPanLeft_Click(System::Object^ sender, System::EventArgs^ e);
 	System::Void buttonPanRight_Click(System::Object^ sender, System::EventArgs^ e);
 	void HighlightPoints(List<DataPoint^>^ points, System::Drawing::Color color);
-	void HighlightMinMaxPoints();
 	private: System::Void buttonClear_Click(System::Object^ sender, System::EventArgs^ e);
 	private: System::Void buttonResetCheckbox_Click(System::Object^ sender, System::EventArgs^ e);
 	private: System::Void ñïðàâî÷íàÿÈíôîðìàöèÿToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
