@@ -3,7 +3,7 @@
 
 ## Инструкция
 
-В поля для ввода функций можно вводить такие функции, как, например 2*x, sin(x), sin x
+В поля для ввода функций можно вводить такие функции, как, например 2*x, sin(x), sin x.
 Поддерживаются такие функции, как sin, cos, acos, asin, tan, atan, cosh, sinh, sqrt, sqr, lg, ln,
-log2, cot, acot, exp, round, int, abs
+log2, cot, acot, exp, round, int, abs.
 Поддерживаются операции +, -, *, /, %, ^
